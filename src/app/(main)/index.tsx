@@ -30,6 +30,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     rowGap: 16,
-    maxWidth: 1024,
   },
 });
