@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { NavLinks } from './NavLinks';
 import { Link } from 'expo-router';
+import { NativeText } from './Text';
 
-export const Header = () => {
+export const MobileHeader = () => {
   const { width } = useWindowDimensions();
 
   if (width > 640) {
@@ -14,7 +15,7 @@ export const Header = () => {
     <View style={styles.header}>
       <View style={styles.title}>
         <Link href='/'>
-          <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>H.S.</Text>
+          <NativeText style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>H.S.</NativeText>
         </Link>
       </View>
 

@@ -26,6 +26,12 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/no-unescaped-entities': 'off',
     'react-native/no-inline-styles': 'off',
+    'react-hooks/exhaustive-deps': [
+      'error',
+      {
+        additionalHooks: '(useAnimatedStyle|useDerivedValue|useAnimatedProps)',
+      },
+    ],
   },
   settings: {
     'import/resolver': {

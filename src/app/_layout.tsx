@@ -1,10 +1,18 @@
 import Head from 'expo-router/head';
 import { Slot } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { DarkTheme, ThemeProvider } from '@react-navigation/native';
+
+const customDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    background: '#111',
+  },
+};
 
 export const unstable_settings = {
-  initialRouteName: 'index',
+  initialRouteName: '(root)',
 };
 
 export default function RootLayout() {
@@ -14,21 +22,11 @@ export default function RootLayout() {
         <title>H.S.</title>
       </Head>
 
-      <Backgound />
-
-      <Slot />
-
       <StatusBar style='light' />
+
+      <ThemeProvider value={customDarkTheme}>
+        <Slot />
+      </ThemeProvider>
     </>
   );
 }
-
-const Backgound = () => <View style={styles.background} />;
-
-const styles = StyleSheet.create({
-  background: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#111',
-    zIndex: -1,
-  },
-});
