@@ -28,10 +28,8 @@ export default function IndexPage() {
           />
         </View>
 
-        <View style={{ rowGap: 32, padding: 32 }}>
-          <View>
-            <NativeText style={{ fontSize: 20 }}>Japan (Gifu)</NativeText>
-          </View>
+        <View style={{ flex: 1, alignItems: 'center', rowGap: 32, padding: 32 }}>
+          <NativeText style={{ fontSize: 20 }}>Japan (Gifu)</NativeText>
 
           <View>
             <NativeText style={{ fontSize: 20 }}>.NET and React are the primary languages I use in my work.</NativeText>

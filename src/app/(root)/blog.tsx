@@ -11,9 +11,15 @@ export default function BlogPage() {
 
       <View style={styles.list}>
         {Rss.map((item) => (
-          <ExternalLink key={item.id} href={item.title} asChild>
+          <ExternalLink key={item.id} href={item.link} asChild>
             <Animated.View style={styles.card} entering={FadeIn}>
-              <NativeText>{item.id}</NativeText>
+              <NativeText style={{ fontSize: 16, fontWeight: 'bold', textDecorationLine: 'underline' }}>
+                ● {item.title}
+              </NativeText>
+              <NativeText style={{ flex: 1, padding: 4, justifyContent: 'center', alignItems: 'center' }}>
+                {item.contentSnippet.substring(0, 100)}...
+              </NativeText>
+              <NativeText style={{ alignSelf: 'flex-end' }}>{item.isoData}</NativeText>
             </Animated.View>
           </ExternalLink>
         ))}
@@ -38,11 +44,13 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '100%',
-    height: 100,
+    height: 140,
     maxWidth: 600,
     backgroundColor: '#000',
     padding: 8,
+    paddingTop: 12,
+    paddingBottom: 16,
     borderRadius: 8,
-    margin: 4,
+    margin: 8,
   },
 });

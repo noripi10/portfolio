@@ -11,7 +11,7 @@ export default function DevelopmentPage() {
 
       <View style={styles.list}>
         {Rss.map((item) => (
-          <ExternalLink key={item.id} href={item.title} asChild>
+          <ExternalLink key={item.id} href={item.link} asChild>
             <Animated.View style={styles.card} entering={FadeIn}>
               <NativeText>{item.id}</NativeText>
             </Animated.View>
@@ -38,11 +38,13 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '100%',
-    height: 100,
+    height: 140,
     maxWidth: 600,
     backgroundColor: '#000',
     padding: 8,
+    paddingTop: 12,
+    paddingBottom: 16,
     borderRadius: 8,
-    margin: 4,
+    margin: 8,
   },
 });
