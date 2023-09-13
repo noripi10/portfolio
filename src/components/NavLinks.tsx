@@ -6,8 +6,8 @@ import { NativeText } from './Text';
 export const NavLinks = ({ dispIcon = true, dispText = true }: { dispIcon?: boolean; dispText?: boolean }) => {
   return (
     <>
-      <NavLink to={'/project'} description='PROJECT' name={'project'} dispIcon={dispIcon} dispText={dispText} />
-      <NavLink to={'/blog/'} description='BLOG' name={'blog'} dispIcon={dispIcon} dispText={dispText} />
+      <NavLink to={'/development'} description='Development' name={'project'} dispIcon={dispIcon} dispText={dispText} />
+      <NavLink to={'/blog'} description='Blog' name={'blog'} dispIcon={dispIcon} dispText={dispText} />
     </>
   );
 };
@@ -29,7 +29,7 @@ const NavLink = ({
     // @ts-expect-error
     <Link href={to}>
       <View style={styles.linkContainer}>
-        {dispIcon && <Icon name={name} width={32} height={32} fill={'#fff'} />}
+        {dispIcon && <Icon name={name} width={28} height={28} fill={'#fff'} />}
         {dispText && <NativeText style={styles.linkText}>{description}</NativeText>}
       </View>
     </Link>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    columnGap: 16,
+    columnGap: 6,
   },
   linkText: {
     fontSize: 16,

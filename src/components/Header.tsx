@@ -1,10 +1,12 @@
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, Platform, View, useWindowDimensions } from 'react-native';
 
 import { NavLinks } from './NavLinks';
 import { Link } from 'expo-router';
 import { NativeText } from './Text';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const MobileHeader = () => {
+  const { top } = useSafeAreaInsets();
   const { width } = useWindowDimensions();
 
   if (width > 640) {
@@ -12,7 +14,7 @@ export const MobileHeader = () => {
   }
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { paddingTop: top, height: 60 + top }]}>
       <View style={styles.title}>
         <Link href='/'>
           <NativeText style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>H.S.</NativeText>
@@ -20,7 +22,7 @@ export const MobileHeader = () => {
       </View>
 
       <View style={styles.rowHeaderLinks}>
-        <NavLinks />
+        <NavLinks dispText={Platform.OS === 'web'} />
       </View>
     </View>
   );
@@ -29,12 +31,12 @@ export const MobileHeader = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    position: 'fixed',
+    position: 'sticky',
     top: 0,
     left: 0,
     right: 0,
     height: 60,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: 'rgba(0,0,0,0.9)',
     alignItems: 'center',
     paddingHorizontal: 16,
     zIndex: 100,
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
   },
   rowHeaderLinks: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 16,
     alignItems: 'center',
   },
 });

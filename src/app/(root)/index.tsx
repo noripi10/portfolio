@@ -1,4 +1,4 @@
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Footer } from '../../components/Footer';
 import { NativeText } from '../../components/Text';
 import { Image } from 'expo-image';
@@ -7,31 +7,30 @@ export default function IndexPage() {
   const { width } = useWindowDimensions();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{ flex: 1, justifyContent: 'center', rowGap: 8 }}>
         <View style={{ marginHorizontal: 'auto' }}>
-          <NativeText style={{ fontSize: 48, paddingVertical: 20 }}>I'm Hironori Sugiyama</NativeText>
+          <NativeText style={{ fontSize: 44, paddingVertical: 20 }}>I'm Hironori Sugiyama</NativeText>
         </View>
 
         <View style={styles.imageContainer}>
           <Image
-            style={[styles.image, { width: width / 2, maxWidth: 480 }]}
+            style={[styles.image, { width: width * 0.8, maxWidth: 540 }]}
             source={require('../../../assets/me2.webp')}
             contentFit='cover'
             transition={1000}
           />
           <Image
-            style={[styles.image, { width: width / 2, maxWidth: 480 }]}
+            style={[styles.image, { width: width * 0.8, maxWidth: 540 }]}
             source={require('../../../assets/me.webp')}
             contentFit='cover'
             transition={1000}
           />
         </View>
 
-        <View style={{ marginHorizontal: 'auto', rowGap: 32, padding: 32 }}>
+        <View style={{ rowGap: 32, padding: 32 }}>
           <View>
             <NativeText style={{ fontSize: 20 }}>Japan (Gifu)</NativeText>
-            <NativeText style={{ fontSize: 20 }}>I'm the father of two children.</NativeText>
           </View>
 
           <View>
@@ -44,7 +43,7 @@ export default function IndexPage() {
       </View>
 
       <Footer />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   imageContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
   },
