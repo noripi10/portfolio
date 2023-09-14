@@ -1,6 +1,6 @@
-import Head from 'expo-router/head';
-import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Slot } from 'expo-router';
+import Head from 'expo-router/head';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 
 const customDarkTheme = {

@@ -1,5 +1,6 @@
-import { Link } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
+import { Link } from 'expo-router';
+
 import { Icon, IconName } from './Icon';
 import { NativeText } from './Text';
 

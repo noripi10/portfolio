@@ -21,13 +21,9 @@ export default function BlogPage() {
                 <Image style={styles.cardImage} source={{ uri: item.og }} contentFit='contain' />
               </View>
               <View style={styles.cardDetail}>
-                <NativeText style={{ fontSize: 14, fontWeight: 'bold', textDecorationLine: 'underline' }}>
-                  {item.title}
-                </NativeText>
-                <NativeText style={{ flex: 1, padding: 4, justifyContent: 'center', alignItems: 'center' }}>
-                  {item.contentSnippet.substring(0, 100)}...
-                </NativeText>
-                <NativeText style={{ alignSelf: 'flex-end', paddingHorizontal: 8 }}>{item.isoData}</NativeText>
+                <NativeText style={styles.cardTitle}>{item.title}</NativeText>
+                <NativeText style={styles.cardContent}>{item.contentSnippet.substring(0, 100)}...</NativeText>
+                <NativeText style={styles.cardDate}>{item.isoData}</NativeText>
               </View>
             </Animated.View>
           </ExternalLink>
@@ -55,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     height: 160,
-    maxWidth: 620,
+    maxWidth: 768,
     backgroundColor: '#000',
     padding: 8,
     paddingVertical: 12,
@@ -67,9 +63,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
   },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  },
+  cardContent: {
+    flex: 1,
+    padding: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardDate: {
+    alignSelf: 'flex-end',
+    paddingHorizontal: 8,
+  },
   cardImage: {
     flex: 1,
-    maxWidth: 136,
+    maxWidth: 160,
     margin: 2,
     marginRight: 4,
   },

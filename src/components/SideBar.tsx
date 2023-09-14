@@ -1,8 +1,9 @@
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useRouter } from 'expo-router';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import { NavLinks } from './NavLinks';
 import { NativeText } from './Text';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const MAX_WIDTH = 300;
 const MIN_WIDTH = 92;

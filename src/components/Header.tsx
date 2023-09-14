@@ -1,9 +1,9 @@
 import { StyleSheet, Platform, View, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
 
 import { NavLinks } from './NavLinks';
-import { Link } from 'expo-router';
 import { NativeText } from './Text';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const MobileHeader = () => {
   const { top } = useSafeAreaInsets();

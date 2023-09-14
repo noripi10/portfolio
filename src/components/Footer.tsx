@@ -1,11 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 
+import { ExternalLink } from './ExternalLink';
+import { NativeText } from './Text';
 import X from '../../assets/svg/x.svg';
 import Github from '../../assets/svg/github.svg';
 import Expo from '../../assets/svg/expo.svg';
 import Email from '../../assets/svg/mail.svg';
-import { ExternalLink } from './ExternalLink';
-import { NativeText } from './Text';
 
 export const Footer = () => {
   return (
