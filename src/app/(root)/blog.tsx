@@ -1,8 +1,12 @@
 import { StyleSheet, View } from 'react-native';
-import { NativeText } from '../../components/Text';
-import Rss from '../../../assets/rss/rss.json';
-import { ExternalLink } from '../../components/ExternalLink';
+import { Image } from 'expo-image';
 import Animated, { FadeIn } from 'react-native-reanimated';
+
+import { NativeText } from '../../components/Text';
+import { ExternalLink } from '../../components/ExternalLink';
+import Rss from '../../constants/rss/rss.json';
+
+console.info({ Rss });
 
 export default function BlogPage() {
   return (
@@ -13,13 +17,18 @@ export default function BlogPage() {
         {Rss.map((item) => (
           <ExternalLink key={item.id} href={item.link} asChild>
             <Animated.View style={styles.card} entering={FadeIn}>
-              <NativeText style={{ fontSize: 16, fontWeight: 'bold', textDecorationLine: 'underline' }}>
-                ● {item.title}
-              </NativeText>
-              <NativeText style={{ flex: 1, padding: 4, justifyContent: 'center', alignItems: 'center' }}>
-                {item.contentSnippet.substring(0, 100)}...
-              </NativeText>
-              <NativeText style={{ alignSelf: 'flex-end' }}>{item.isoData}</NativeText>
+              <View style={styles.cardImage}>
+                <Image style={styles.cardImage} source={{ uri: item.og }} contentFit='contain' />
+              </View>
+              <View style={styles.cardDetail}>
+                <NativeText style={{ fontSize: 14, fontWeight: 'bold', textDecorationLine: 'underline' }}>
+                  {item.title}
+                </NativeText>
+                <NativeText style={{ flex: 1, padding: 4, justifyContent: 'center', alignItems: 'center' }}>
+                  {item.contentSnippet.substring(0, 100)}...
+                </NativeText>
+                <NativeText style={{ alignSelf: 'flex-end', paddingHorizontal: 8 }}>{item.isoData}</NativeText>
+              </View>
             </Animated.View>
           </ExternalLink>
         ))}
@@ -43,14 +52,28 @@ const styles = StyleSheet.create({
     marginVertical: 32,
   },
   card: {
+    flexDirection: 'row',
     width: '100%',
-    height: 140,
-    maxWidth: 600,
+    height: 160,
+    maxWidth: 620,
     backgroundColor: '#000',
     padding: 8,
-    paddingTop: 12,
+    paddingVertical: 12,
     paddingBottom: 16,
     borderRadius: 8,
     margin: 8,
+    shadowColor: '#ddd',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+  },
+  cardImage: {
+    flex: 1,
+    maxWidth: 136,
+    margin: 2,
+    marginRight: 4,
+  },
+  cardDetail: {
+    flex: 1,
   },
 });

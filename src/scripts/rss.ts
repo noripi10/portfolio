@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import Parser from 'rss-parser';
+import dayjs from '../libs/day';
 
 const parser = new Parser();
 
@@ -8,12 +9,15 @@ const parse = async () => {
 
   const feed = await parser.parseURL('https://zenn.dev/noripi10/feed');
 
+  // console.info('feed.items', feed.items);
+
   const items = feed.items.map((item) => ({
     id: item.guid.split('/').pop(),
     title: item.title,
     link: item.link,
-    isoData: item.isoDate,
+    isoData: dayjs(item.isoDate).format('YYYY/MM/DD(ddd) HH:mm'),
     contentSnippet: item.contentSnippet.replace(/\n/g, ''),
+    og: item.enclosure.url,
   }));
 
   items.sort((a, b) => {
@@ -28,10 +32,10 @@ const parse = async () => {
 
 parse().then(async (rss) => {
   try {
-    await fs.rm('./assets/rss', { recursive: true, force: true });
-    await fs.mkdir('./assets/rss');
+    await fs.rm('./src/constants/rss', { recursive: true, force: true });
+    await fs.mkdir('./src/constants/rss');
     const json = JSON.stringify(rss, null, 2);
-    fs.writeFile('./assets/rss/rss.json', json);
+    fs.writeFile('./src/constants/rss/rss.json', json);
   } catch (error) {
     console.error('[Error] rss file create');
   }

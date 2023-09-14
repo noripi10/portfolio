@@ -1,0 +1,34 @@
+[
+  {
+    "id": "8a0af95d2b3215",
+    "title": "React Native Xcode Archive エラー（Multiple commands produce）",
+    "link": "https://zenn.dev/noripi10/articles/8a0af95d2b3215",
+    "isoData": "2021/04/21(水) 23:03",
+    "contentSnippet": "Expo BareWorkFlowで開発後、XcodeでArchive時に下記エラー発生・失敗。TestFlight用に過去数回Airchiveしていたのに、Expo SDK41へアップグレードいくつかのパッケージを入れたこの辺りをやったことが原因だと思われるMultiple commands produce '/Users/{username}/Library/Developer/Xcode/DerivedData/bareworkflowapp-henuevdurellpvajhhfkbdqjwjmp/Build/Intermediates.noindex/Arch...",
+    "og": "https://res.cloudinary.com/zenn/image/upload/s--IZHICwLI--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:React%2520Native%2520Xcode%2520Archive%2520%25E3%2582%25A8%25E3%2583%25A9%25E3%2583%25BC%25EF%25BC%2588Multiple%2520commands%2520produce%25EF%25BC%2589%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:noripi10%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2E1YTJhZDVhOGYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png"
+  },
+  {
+    "id": "0e14d8dbea85cd",
+    "title": "SwitchBot用のChrome拡張機能を作りました",
+    "link": "https://zenn.dev/noripi10/articles/0e14d8dbea85cd",
+    "isoData": "2022/07/30(土) 22:46",
+    "contentSnippet": "先日、思い立ってChrome拡張機能を作ったので記事にします。 どんな拡張機能か最近流行りのSwitchBotを使ったコントローラーです。筆者が使用しているのはハブミニというものですが、赤外線リモコン付きの機器であれば大体接続できます。https://www.switchbot.jp/products/switchbot-hub-miniいつも帰る前にSwitchBot経由でエアコンをオンにしておくのですが、ある日スマホ（Macは絶対忘れない）を忘れてしまい操作できず。。。ご想像通り、クソ暑い部屋に入らないといけない状態です、終わりです。。。笑そんなに発生する事案ではないん...",
+    "og": "https://res.cloudinary.com/zenn/image/upload/s--16Mo4ftP--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:SwitchBot%25E7%2594%25A8%25E3%2581%25AEChrome%25E6%258B%25A1%25E5%25BC%25B5%25E6%25A9%259F%25E8%2583%25BD%25E3%2582%2592%25E4%25BD%259C%25E3%2582%258A%25E3%2581%25BE%25E3%2581%2597%25E3%2581%259F%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:noripi10%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2E1YTJhZDVhOGYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png"
+  },
+  {
+    "id": "2db7fb619f588d",
+    "title": ".NET6 + EnityFramework + ChocolateでGraphQLサーバーを作る",
+    "link": "https://zenn.dev/noripi10/articles/2db7fb619f588d",
+    "isoData": "2022/09/29(木) 23:43",
+    "contentSnippet": "業務では、いつもはREST APIでバックエンドは作成していたのですが、.NETでGraphQLサーバーを作ってみようかと思い作ったので記録のために記事にしました。 仕様技術.NET6Entity FrameworkGraphQLJWT Authentication GraphQL用ライブラリhttps://graphql.org/code/#c-netいくつか候補がありますが、見た感じ結構面白そうだったので以下のライブラリを使用しました。Hot Chocolate　(ホットチョコレート　名前がオシャレ！)https://chillicream.com/d...",
+    "og": "https://res.cloudinary.com/zenn/image/upload/s--z7UN61gi--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:.NET6%2520%252B%2520EnityFramework%2520%252B%2520Chocolate%25E3%2581%25A7GraphQL%25E3%2582%25B5%25E3%2583%25BC%25E3%2583%2590%25E3%2583%25BC%25E3%2582%2592%25E4%25BD%259C%25E3%2582%258B%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:noripi10%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2E1YTJhZDVhOGYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png"
+  },
+  {
+    "id": "bb6cbb8a90e3e9",
+    "title": "Gmailを定期的に削除するCloud Functionsを作成",
+    "link": "https://zenn.dev/noripi10/articles/bb6cbb8a90e3e9",
+    "isoData": "2022/10/24(月) 23:37",
+    "contentSnippet": "GmailGmailはみなさん高確率で利用されているのではないでしょうか。私の場合結構なウェイトを占めている利用方法があります。会社でグループウェアを使用してメール処理をしてますが、保管用にGmailへ自動転送しています。グループウェアだけで管理できれば良いのですが、メール検索が貧弱なため転送先のGmailで検索してたりしています。（ファイル内容も検索してくれるので重宝しています）。ただ、Gmail無料枠は１０GBですので、転送し続けれるわけなく私の場合は９０%を超えてきていました。システムメール（ログ）なども全転送してるので、塵も積もれば山となるという感じです。そこ...",
+    "og": "https://res.cloudinary.com/zenn/image/upload/s--qDfl4BXl--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Gmail%25E3%2582%2592%25E5%25AE%259A%25E6%259C%259F%25E7%259A%2584%25E3%2581%25AB%25E5%2589%258A%25E9%2599%25A4%25E3%2581%2599%25E3%2582%258BCloud%2520Functions%25E3%2582%2592%25E4%25BD%259C%25E6%2588%2590%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:noripi10%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2E1YTJhZDVhOGYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png"
+  }
+]

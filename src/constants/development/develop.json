@@ -1,0 +1,54 @@
+[
+  {
+    "name": "メモリス",
+    "description": "手書きメモを簡単に作成できるメモアプリです。メモ保存は端末内のみです。Cloudへの保存は不安といった場合に使えます。",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/62/1a/69/621a69f3-52df-7a1b-1c6d-4971b0abb8b5/AppIcon-1x_U007emarketing-0-7-0-85-220.png/217x0w.webp",
+    "stores": [
+      {
+        "ios": "https://apps.apple.com/jp/app/%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%B9/id1547004806",
+        "android": "https://play.google.com/store/apps/details?id=com.hiroapp.handwritten"
+      }
+    ],
+    "technology": ["react-native", "expo"]
+  },
+  {
+    "name": "ウェザリス",
+    "description": "天気予報アプリです。OpenWeatherMap APIを使用して天気予報を取得しています。",
+    "stores": [
+      {
+        "ios": "https://apps.apple.com/jp/app/%E3%82%A6%E3%82%A7%E3%82%B6%E3%83%AA%E3%82%B9/id1554740536"
+      }
+    ],
+    "technology": ["react-native", "expo", "firebase"]
+  },
+  {
+    "name": "my クイズ",
+    "description": "自作クイズアプリです。普通のクイズとは違い作成したクイズに声で回答します。モチベーションは小さい子供は４択などからの回答は難しいので、声を出してであれば回答することができると考え作成しました。実際自分の子供は楽しんでくれています!!!",
+    "stores": [
+      {
+        "ios": "https://apps.apple.com/jp/app/my-%E3%82%AF%E3%82%A4%E3%82%BA/id1598134285"
+      }
+    ],
+    "technology": ["react-native", "expo", "firebase", "hasura(graphql)", "native-base"]
+  },
+  {
+    "name": "GeoTask",
+    "description": "タスク管理アプリです。ジオフェンシグによる位置情報とプッシュ通知連携を行っています。写真を登録しておくとプッシュ通知にも表示できます。外部サービス連携(RestAPI)もプッシュ通知時に連携できます。",
+    "stores": [
+      {
+        "ios": "https://apps.apple.com/us/app/geotask-%E3%82%B8%E3%82%AA%E3%82%BF%E3%82%B9%E3%82%AF/id6446362733"
+      }
+    ],
+    "technology": ["react-native", "expo", "firebase", "native-base"]
+  },
+  {
+    "name": "my-switchbot-controller",
+    "description": "Switchbotを操作できるChrome 拡張機能です。スマホアプリからいつも操作していた(起動するのが手間...)のですが、自分は電源ON・OFFくらいしか普段使わないので、自作しました。普段Chromeを使っているので、操作が楽になりました。",
+    "stores": [
+      {
+        "chrome": "https://chrome.google.com/webstore/detail/my-switchbot-controler/ajhnghbfoleadocfplnfkfnkcbcamehl"
+      }
+    ],
+    "technology": ["react", "vite", "chakra-ui"]
+  }
+]

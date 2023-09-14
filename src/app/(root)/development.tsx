@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { NativeText } from '../../components/Text';
-import Rss from '../../../assets/rss/rss.json';
+import Rss from '../../constants/rss/rss.json';
 import { ExternalLink } from '../../components/ExternalLink';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
