@@ -1,7 +1,7 @@
-import Develop from '../constants/development/development.json';
+import { ExternalLink } from '../ExternalLink';
 
+import Develop from '../../constants/development/development.json';
 import './DevelopmentList.css';
-import { ExternalLink } from './ExternalLink';
 
 export const DevelopmentList = () => {
   return (

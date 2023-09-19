@@ -1,15 +1,15 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import { NativeText } from '../../components/Text';
 import { DevelopmentList } from '../../components/DevelopmentList';
 
 export default function DevelopmentPage() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <NativeText style={styles.heading}>Development</NativeText>
 
       <DevelopmentList />
-    </View>
+    </ScrollView>
   );
 }
 

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@expo/html-elements": "^0.5.1",
     "@react-navigation/native": "^6.1.7",
     "@types/react": "~18.2.14",
     "dayjs": "^1.11.9",
@@ -40,6 +41,7 @@
     "@react-native/eslint-config": "^0.72.2",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
+    "bun-types": "latest",
     "esbuild": "^0.19.2",
     "esbuild-register": "^3.4.2",
     "eslint": "^8.48.0",
@@ -53,8 +55,7 @@
     "prettier": "^3.0.3",
     "react-native-svg-transformer": "^1.1.0",
     "rss-parser": "^3.13.0",
-    "ts-node": "^10.9.1",
-    "bun-types": "latest"
+    "ts-node": "^10.9.1"
   },
   "private": true,
   "engines": {

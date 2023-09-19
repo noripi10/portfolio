@@ -5,11 +5,7 @@ import dayjs from '../libs/day';
 const parser = new Parser();
 
 const parse = async () => {
-  console.info('rss parser');
-
   const feed = await parser.parseURL('https://zenn.dev/noripi10/feed');
-
-  // console.info('feed.items', feed.items);
 
   const items = feed.items.map((item) => ({
     id: item.guid.split('/').pop(),

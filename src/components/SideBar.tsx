@@ -26,7 +26,6 @@ export const SideBar = () => {
     <View style={[styles.sidebar, { width: responsibleWidth }]}>
       <TouchableOpacity
         onPress={() => {
-          console.info('go to home');
           router.push('/');
         }}
       >
