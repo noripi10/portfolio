@@ -1,3 +1,4 @@
+import '@/style/global.css';
 import { StatusBar } from 'expo-status-bar';
 import { Slot } from 'expo-router';
 import Head from 'expo-router/head';

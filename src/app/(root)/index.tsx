@@ -1,20 +1,20 @@
-import { StyleSheet, ScrollView, View, useWindowDimensions, Platform } from 'react-native';
+import { StyleSheet, ScrollView, View, Platform } from 'react-native';
 import { Image } from 'expo-image';
 
 import { Footer } from '@/components/Footer';
 import { NativeText } from '@/components/Text';
 import { AnimatedText } from '@/components/AnimatedText';
+import { useWidth } from '@/hooks/useWidth';
 
 const CustomView = Platform.OS === 'web' ? View : ScrollView;
 
 export default function IndexPage() {
-  const { width } = useWindowDimensions();
+  const { width } = useWidth();
 
   return (
     <CustomView style={styles.container}>
       <View style={{ flex: 1, justifyContent: 'center', rowGap: 8 }}>
         <View style={{ marginHorizontal: 'auto' }}>
-          {/* <NativeText style={{ fontSize: 44, paddingVertical: 20 }}>I'm Hironori Sugiyama</NativeText> */}
           <AnimatedText>I'm Hironori Sugiyama</AnimatedText>
         </View>
 

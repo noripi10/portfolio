@@ -2,8 +2,11 @@ import { useRef, useState, useEffect } from 'react';
 import { Animated, Easing } from 'react-native';
 
 import { NativeText } from './Text';
+import { useWidth } from '@/hooks/useWidth';
 
 export const AnimatedText = ({ children }: { children: string }) => {
+  const { isXS } = useWidth();
+
   const [text, setText] = useState('  ');
 
   const animated = useRef(new Animated.Value(0)).current;
@@ -39,7 +42,7 @@ export const AnimatedText = ({ children }: { children: string }) => {
 
   return (
     <Animated.View style={{ opacity: animated }}>
-      <NativeText style={[{ fontSize: 44, paddingVertical: 20 }]}>{text}</NativeText>
+      <NativeText style={[{ fontSize: isXS ? 36 : 44, paddingVertical: 20 }]}>{text}</NativeText>
     </Animated.View>
   );
 };

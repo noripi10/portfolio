@@ -72,5 +72,6 @@ const styles = StyleSheet.create({
   },
   cardDetail: {
     flex: 1,
+    overflow: 'hidden',
   },
 });

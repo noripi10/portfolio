@@ -1,7 +1,8 @@
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { useWidth } from '@/hooks/useWidth';
 import { NavLinks } from './NavLinks';
 import { NativeText } from './Text';
 
@@ -10,11 +11,7 @@ const MIN_WIDTH = 92;
 
 export const SideBar = () => {
   const router = useRouter();
-  const { width } = useWindowDimensions();
-
-  const isXS = width < 640;
-  const isMd = width >= 640;
-  const isLG = width >= 1024;
+  const { isXS, isMD, isLG } = useWidth();
 
   const responsibleWidth = isLG ? MAX_WIDTH : MIN_WIDTH;
 
@@ -32,8 +29,8 @@ export const SideBar = () => {
         <NativeText style={[styles.appName, !isLG && { fontSize: 32, fontWeight: '600' }]}>H.S.</NativeText>
       </TouchableOpacity>
 
-      <View style={[styles.colHeaderLinks, { alignSelf: !isMd ? 'center' : 'flex-start' }]}>
-        <NavLinks dispIcon={isMd} dispText={isLG} />
+      <View style={[styles.colHeaderLinks, { alignSelf: !isMD ? 'center' : 'flex-start' }]}>
+        <NavLinks dispIcon={isMD} dispText={isLG} />
       </View>
     </View>
   );
