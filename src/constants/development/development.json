@@ -1,24 +1,5 @@
 [
   {
-    "name": "メモリス",
-    "description": "手書きメモを簡単に作成できるメモアプリです。メモ保存は端末内のみです。Cloudへの保存は不安といった場合に使えます。",
-    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/62/1a/69/621a69f3-52df-7a1b-1c6d-4971b0abb8b5/AppIcon-1x_U007emarketing-0-7-0-85-220.png/217x0w.webp",
-    "stores": {
-      "ios": "https://apps.apple.com/jp/app/%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%B9/id1547004806",
-      "android": "https://play.google.com/store/apps/details?id=com.hiroapp.handwritten"
-    },
-    "technology": ["react-native", "expo"]
-  },
-  {
-    "name": "ウェザリス",
-    "description": "天気予報アプリです。OpenWeatherMap APIを使用して天気予報を取得しています。",
-    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple125/v4/10/46/14/104614ea-fbcd-1b09-6de7-51ce2a8c769e/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/217x0w.webp",
-    "stores": {
-      "ios": "https://apps.apple.com/jp/app/%E3%82%A6%E3%82%A7%E3%82%B6%E3%83%AA%E3%82%B9/id1554740536"
-    },
-    "technology": ["react-native", "expo", "firebase"]
-  },
-  {
     "name": "my クイズ",
     "description": "自作クイズアプリです。普通のクイズとは違い作成したクイズに声で回答します。モチベーションは小さい子供は４択などからの回答は難しいので、声を出してであれば回答することができると考え作成しました。実際自分の子供は楽しんでくれています!!!",
     "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/97/f9/af/97f9af53-3a35-625e-30b9-a7fd56d3c855/AppIcon-1x_U007epad-85-220.png/217x0w.webp",
@@ -44,6 +25,25 @@
       "ios": "https://apps.apple.com/us/app/geotask-%E3%82%B8%E3%82%AA%E3%82%BF%E3%82%B9%E3%82%AF/id6446362733"
     },
     "technology": ["react-native", "expo", "expo-router", "firebase", "native-base", "geofencing"]
+  },
+  {
+    "name": "ウェザリス",
+    "description": "天気予報アプリです。OpenWeatherMap APIを使用して天気予報を取得しています。",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple125/v4/10/46/14/104614ea-fbcd-1b09-6de7-51ce2a8c769e/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/217x0w.webp",
+    "stores": {
+      "ios": "https://apps.apple.com/jp/app/%E3%82%A6%E3%82%A7%E3%82%B6%E3%83%AA%E3%82%B9/id1554740536"
+    },
+    "technology": ["react-native", "expo", "firebase"]
+  },
+  {
+    "name": "メモリス",
+    "description": "手書きメモを簡単に作成できるメモアプリです。メモ保存は端末内のみです。Cloudへの保存は不安といった場合に使えます。",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/62/1a/69/621a69f3-52df-7a1b-1c6d-4971b0abb8b5/AppIcon-1x_U007emarketing-0-7-0-85-220.png/217x0w.webp",
+    "stores": {
+      "ios": "https://apps.apple.com/jp/app/%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%B9/id1547004806",
+      "android": "https://play.google.com/store/apps/details?id=com.hiroapp.handwritten"
+    },
+    "technology": ["react-native", "expo"]
   },
   {
     "name": "my-switchbot-controller",

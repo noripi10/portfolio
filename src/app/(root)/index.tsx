@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 
 import { Footer } from '../../components/Footer';
 import { NativeText } from '../../components/Text';
+import { AnimatedText } from '../../components/AnimatedText';
 
 const CustomView = Platform.OS === 'web' ? View : ScrollView;
 
@@ -13,16 +14,25 @@ export default function IndexPage() {
     <CustomView style={styles.container}>
       <View style={{ flex: 1, justifyContent: 'center', rowGap: 8 }}>
         <View style={{ marginHorizontal: 'auto' }}>
-          <NativeText style={{ fontSize: 44, paddingVertical: 20 }}>I'm Hironori Sugiyama</NativeText>
+          {/* <NativeText style={{ fontSize: 44, paddingVertical: 20 }}>I'm Hironori Sugiyama</NativeText> */}
+          <AnimatedText>I'm Hironori Sugiyama</AnimatedText>
         </View>
 
         <View style={styles.imageContainer}>
-          <Image
-            style={[styles.image, { width: width * 0.8, maxWidth: 540 }]}
-            source={require('../../../assets/me.webp')}
-            contentFit='cover'
-            transition={1000}
-          />
+          <View>
+            <Image
+              style={[styles.image, { width: width * 0.8, maxWidth: 540 }]}
+              source={require('../../../assets/me.webp')}
+              contentFit='cover'
+              transition={1000}
+            />
+            <Image
+              style={[styles.avatar]}
+              source={require('../../../assets/avatar.png')}
+              contentFit='contain'
+              transition={1000}
+            />
+          </View>
         </View>
 
         <View style={{ flex: 1, alignItems: 'center', rowGap: 32, padding: 32 }}>
@@ -51,10 +61,20 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 8,
+    position: 'relative',
   },
   image: {
     borderRadius: 8,
     aspectRatio: 16 / 9,
+  },
+  avatar: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
+    width: 64,
+    height: 64,
+    borderRadius: 100,
   },
 });
