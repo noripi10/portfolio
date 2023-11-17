@@ -1,7 +1,7 @@
 import { StyleSheet, ScrollView } from 'react-native';
 
-import { NativeText } from '../../components/Text';
-import { BlogList } from '../../components/BlogList';
+import { NativeText } from '@/components/Text';
+import { BlogList } from '@/components/BlogList';
 
 export default function BlogPage() {
   return (

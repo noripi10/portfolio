@@ -2,9 +2,9 @@ import { StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
-import { NativeText } from '../components/Text';
-import { ExternalLink } from '../components/ExternalLink';
-import Rss from '../constants/rss/rss.json';
+import { NativeText } from '@/components/Text';
+import { ExternalLink } from '@/components/ExternalLink';
+import Rss from '@/constants/rss/rss.json';
 
 export const BlogList = () => {
   return (

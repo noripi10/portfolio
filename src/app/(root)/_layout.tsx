@@ -1,9 +1,9 @@
 import { Slot } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
-import { MobileHeader } from '../../components/Header';
-import { SideBar } from '../../components/SideBar';
-import { Backgound } from '../../components/Backgound';
+import { MobileHeader } from '@/components/Header';
+import { SideBar } from '@/components/SideBar';
+import { Backgound } from '@/components/Backgound';
 
 export default function MainLayout() {
   return (

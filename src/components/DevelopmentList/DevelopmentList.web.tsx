@@ -1,6 +1,5 @@
-import { ExternalLink } from '../ExternalLink';
-
-import Develop from '../../constants/development/development.json';
+import { ExternalLink } from '@/components/ExternalLink';
+import Develop from '@/constants/development/development.json';
 import './DevelopmentList.css';
 
 export const DevelopmentList = () => {

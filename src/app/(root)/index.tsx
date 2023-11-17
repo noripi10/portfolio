@@ -1,9 +1,9 @@
 import { StyleSheet, ScrollView, View, useWindowDimensions, Platform } from 'react-native';
 import { Image } from 'expo-image';
 
-import { Footer } from '../../components/Footer';
-import { NativeText } from '../../components/Text';
-import { AnimatedText } from '../../components/AnimatedText';
+import { Footer } from '@/components/Footer';
+import { NativeText } from '@/components/Text';
+import { AnimatedText } from '@/components/AnimatedText';
 
 const CustomView = Platform.OS === 'web' ? View : ScrollView;
 
@@ -22,13 +22,13 @@ export default function IndexPage() {
           <View>
             <Image
               style={[styles.image, { width: width * 0.8, maxWidth: 540 }]}
-              source={require('../../../assets/me.webp')}
+              source={require('@assets/me.webp')}
               contentFit='cover'
               transition={1000}
             />
             <Image
               style={[styles.avatar]}
-              source={require('../../../assets/avatar.png')}
+              source={require('@assets/avatar.png')}
               contentFit='contain'
               transition={1000}
             />
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   },
   avatar: {
     position: 'absolute',
-    bottom: 4,
-    right: 4,
+    top: 4,
+    left: 4,
     width: 64,
     height: 64,
     borderRadius: 100,

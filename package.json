@@ -1,5 +1,5 @@
 {
-  "name": "me",
+  "name": "h.s",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
@@ -9,9 +9,10 @@
     "web": "expo start --web",
     "lint": "eslint --fix ./src/**/*.tsx",
     "format": "prettier --write ./src/**/*.tsx",
-    "publish:web": "npx expo export -p web",
-    "preview:web": "npx serve dist",
-    "rss": "node -r esbuild-register ./src/scripts/rss.ts"
+    "publish:web": "bun rss && expo export -p web",
+    "preview:web": "bunx serve dist",
+    "rss": "bunx ts-node ./src/scripts/rss.ts",
+    "rss:node": "node -r esbuild-register ./src/scripts/rss.ts"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",

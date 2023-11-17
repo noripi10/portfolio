@@ -19,7 +19,7 @@ export default function RootLayout() {
   return (
     <>
       <Head>
-        <title>H.S.</title>
+        <title>H.S</title>
       </Head>
 
       <StatusBar style='light' />
