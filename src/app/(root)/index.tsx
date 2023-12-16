@@ -13,7 +13,7 @@ export default function IndexPage() {
 
   return (
     <CustomView style={styles.container}>
-      <View style={{ flex: 1, justifyContent: 'center', rowGap: 8 }}>
+      <View style={styles.mainView}>
         <View style={{ marginHorizontal: 'auto' }}>
           <AnimatedText>I'm Hironori Sugiyama</AnimatedText>
         </View>
@@ -58,6 +58,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 8,
+  },
+  mainView: {
+    flex: 1,
+    justifyContent: 'center',
+    rowGap: 8,
   },
   imageContainer: {
     alignItems: 'center',

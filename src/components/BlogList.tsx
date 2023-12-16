@@ -1,27 +1,36 @@
 import { StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
-import Animated, { FadeIn } from 'react-native-reanimated';
 
 import { NativeText } from '@/components/Text';
 import { ExternalLink } from '@/components/ExternalLink';
 import Rss from '@/constants/rss/rss.json';
 
+import { unstable_styles } from './BlogList.module.css';
+
+type RssItemProp = (typeof Rss)[0];
+
+export const BlogItem = ({ item }: { item: RssItemProp; index: number }) => {
+  return (
+    <ExternalLink key={item.id} href={item.link} asChild>
+      <View style={unstable_styles.card}>
+        <View style={styles.cardImage}>
+          <Image style={styles.cardImage} source={{ uri: item.og }} contentFit='contain' />
+        </View>
+        <View style={styles.cardDetail}>
+          <NativeText style={styles.cardTitle}>{item.title}</NativeText>
+          <NativeText style={styles.cardContent}>{item.contentSnippet.substring(0, 100)}...</NativeText>
+          <NativeText style={styles.cardDate}>{item.isoData}</NativeText>
+        </View>
+      </View>
+    </ExternalLink>
+  );
+};
+
 export const BlogList = () => {
   return (
     <View style={styles.list}>
       {Rss.map((item, index) => (
-        <ExternalLink key={item.id} href={item.link} asChild>
-          <Animated.View style={styles.card} entering={FadeIn.delay(50 * index)}>
-            <View style={styles.cardImage}>
-              <Image style={styles.cardImage} source={{ uri: item.og }} contentFit='contain' />
-            </View>
-            <View style={styles.cardDetail}>
-              <NativeText style={styles.cardTitle}>{item.title}</NativeText>
-              <NativeText style={styles.cardContent}>{item.contentSnippet.substring(0, 100)}...</NativeText>
-              <NativeText style={styles.cardDate}>{item.isoData}</NativeText>
-            </View>
-          </Animated.View>
-        </ExternalLink>
+        <BlogItem key={item.id} {...{ item, index }} />
       ))}
     </View>
   );
