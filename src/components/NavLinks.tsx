@@ -3,6 +3,7 @@ import { Link } from 'expo-router';
 
 import { Icon, IconName } from './Icon';
 import { NativeText } from './Text';
+import { useTheme } from '@react-navigation/native';
 
 export const NavLinks = ({ dispIcon = true, dispText = true }: { dispIcon?: boolean; dispText?: boolean }) => {
   return (
@@ -26,11 +27,13 @@ const NavLink = ({
   dispIcon: boolean;
   dispText: boolean;
 }) => {
+  const theme = useTheme();
+
   return (
     // @ts-expect-error
     <Link href={to}>
       <View style={styles.linkContainer}>
-        {dispIcon && <Icon name={name} width={28} height={28} fill={'#fff'} />}
+        {dispIcon && <Icon name={name} width={28} height={28} fill={theme.colors.text} />}
         {dispText && <NativeText style={styles.linkText}>{description}</NativeText>}
       </View>
     </Link>

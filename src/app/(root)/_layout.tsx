@@ -9,12 +9,9 @@ export default function MainLayout() {
   return (
     <>
       <MobileHeader />
-
+      <Backgound />
       <View style={styles.mainContainer}>
         <SideBar />
-
-        <Backgound />
-
         <View style={styles.slotContainer}>
           <Slot />
         </View>

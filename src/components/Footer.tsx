@@ -6,27 +6,30 @@ import X from '@assets/svg/x.svg';
 import Github from '@assets/svg/github.svg';
 import Expo from '@assets/svg/expo.svg';
 import Email from '@assets/svg/mail.svg';
+import { useTheme } from '@react-navigation/native';
 
 export const Footer = () => {
+  const color = useTheme().colors.text;
+
   return (
     <View style={styles.footer}>
       <View style={styles.iconContainer}>
         <ExternalLink href='https://twitter.com/noripi_10'>
-          <X width={32} height={32} fill='#fff' />
+          <X width={32} height={32} fill={color} />
         </ExternalLink>
 
         <ExternalLink href='https://github.com/noripi10'>
-          <Github width={32} height={32} fill='#fff' />
+          <Github width={32} height={32} fill={color} />
         </ExternalLink>
 
         <ExternalLink href='mailto:sgym.snk@gmai.com'>
-          <Email width={32} height={32} fill='#fff' />
+          <Email width={32} height={32} fill={color} />
         </ExternalLink>
       </View>
 
-      <NativeText style={{ color: 'white' }}>Powered by Expo</NativeText>
+      <NativeText style={{ color }}>Powered by Expo</NativeText>
       <ExternalLink href='https://expo.dev/'>
-        <Expo width={32} height={32} fill='#fff' />
+        <Expo width={32} height={32} fill={color} />
       </ExternalLink>
     </View>
   );

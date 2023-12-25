@@ -1,7 +1,7 @@
 import { StyleSheet, ScrollView } from 'react-native';
 
 import { NativeText } from '@/components/Text';
-import { DevelopmentList } from '@/components/DevelopmentList';
+import { DevelopmentList } from '@/components/developmentList';
 
 export default function DevelopmentPage() {
   return (

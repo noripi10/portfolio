@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useWidth } from '@/hooks/useWidth';
 import { NavLinks } from './NavLinks';
 import { NativeText } from './Text';
+import { useTheme } from '@react-navigation/native';
 
 const MAX_WIDTH = 300;
 const MIN_WIDTH = 92;
@@ -12,6 +13,7 @@ const MIN_WIDTH = 92;
 export const SideBar = () => {
   const router = useRouter();
   const { isXS, isMD, isLG } = useWidth();
+  const theme = useTheme();
 
   const responsibleWidth = isLG ? MAX_WIDTH : MIN_WIDTH;
 
@@ -20,7 +22,7 @@ export const SideBar = () => {
   }
 
   return (
-    <View style={[styles.sidebar, { width: responsibleWidth }]}>
+    <View style={[styles.sidebar, { width: responsibleWidth, backgroundColor: theme.dark ? '#000' : '#ddd' }]}>
       <TouchableOpacity
         onPress={() => {
           router.push('/');
@@ -29,7 +31,7 @@ export const SideBar = () => {
         <NativeText style={[styles.appName, !isLG && { fontSize: 32, fontWeight: '600' }]}>H.S.</NativeText>
       </TouchableOpacity>
 
-      <View style={[styles.colHeaderLinks, { alignSelf: !isMD ? 'center' : 'flex-start' }]}>
+      <View style={[styles.colHeaderLinks, { alignItems: isXS ? 'center' : 'flex-start' }]}>
         <NavLinks dispIcon={isMD} dispText={isLG} />
       </View>
     </View>
@@ -38,7 +40,6 @@ export const SideBar = () => {
 
 const styles = StyleSheet.create({
   sidebar: {
-    backgroundColor: '#000',
     padding: 8,
   },
   appName: {
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     paddingTop: 24,
   },
   colHeaderLinks: {
+    flex: 1,
     rowGap: 20,
     paddingHorizontal: 16,
     paddingVertical: 30,
