@@ -41,6 +41,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@react-native/eslint-config": "^0.72.2",
+    "@types/gtag.js": "^0.0.18",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
     "bun-types": "latest",
