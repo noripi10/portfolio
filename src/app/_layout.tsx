@@ -1,17 +1,19 @@
 import '@/style/global.css';
 
 import { StatusBar } from 'expo-status-bar';
-import { Slot } from 'expo-router';
+import { Slot, useGlobalSearchParams, usePathname } from 'expo-router';
 import Head from 'expo-router/head';
 import { ThemeProvider } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { CustomThemeProvider, useCustomTheme } from '@/components/context/CustomThemeProvider';
+import { useEffect } from 'react';
+import { pageview } from '@/lib/ga';
 
 export const unstable_settings = {
   initialRouteName: '(root)',
 };
 
-function RootLayout() {
+function CustomThemeLayout() {
   const { theme } = useCustomTheme();
 
   return (
@@ -29,10 +31,18 @@ function RootLayout() {
   );
 }
 
-export default function CustomThemeLayout() {
+export default function RootLayout() {
+  const pathname = usePathname();
+  const params = useGlobalSearchParams();
+
+  // GA
+  useEffect(() => {
+    pageview(pathname);
+  }, [pathname, params]);
+
   return (
     <CustomThemeProvider>
-      <RootLayout />
+      <CustomThemeLayout />
     </CustomThemeProvider>
   );
 }
