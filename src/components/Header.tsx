@@ -20,7 +20,7 @@ export const MobileHeader = () => {
     <View style={[styles.header, { backgroundColor, paddingTop: top, height: 60 + top }]}>
       <View style={styles.title}>
         <Link href='/'>
-          <NativeText style={{ color: theme.colors.text, fontSize: 24, fontWeight: 'bold' }}>H.S.</NativeText>
+          <NativeText style={[styles.titleText, { color: theme.colors.text }]}>H.S.</NativeText>
         </Link>
       </View>
 
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
   },
   title: {
     flexGrow: 1,
+  },
+  titleText: {
+    fontSize: 24,
+    fontFamily: 'Inter_700Bold',
   },
   rowHeaderLinks: {
     flexDirection: 'row',

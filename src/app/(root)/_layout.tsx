@@ -8,8 +8,10 @@ import { Backgound } from '@/components/Backgound';
 export default function MainLayout() {
   return (
     <>
-      <MobileHeader />
       <Backgound />
+
+      <MobileHeader />
+
       <View style={styles.mainContainer}>
         <SideBar />
         <View style={styles.slotContainer}>
