@@ -13,7 +13,7 @@ export const Icon = ({ name, ...props }: IconProps) => {
   const Svg = useMemo(() => {
     const tmp = svgIcons(`./${name}.svg`);
     if (!tmp) {
-      throw new Error('Icon(svg) not found:' + name);
+      throw new Error(`Icon(svg) not found:${name}`);
     }
 
     return tmp.default;

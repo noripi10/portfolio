@@ -1,7 +1,7 @@
 import '@/style/global.css';
 
 import { StatusBar } from 'expo-status-bar';
-import { Slot, useGlobalSearchParams, usePathname } from 'expo-router';
+import { Slot, usePathname } from 'expo-router';
 import Head from 'expo-router/head';
 import { ThemeProvider } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -39,12 +39,12 @@ export default function RootLayout() {
   });
 
   const pathname = usePathname();
-  const params = useGlobalSearchParams();
+  // const params = useGlobalSearchParams();
 
   // Googl Analytics
   useEffect(() => {
     pageview(pathname);
-  }, [pathname, params]);
+  }, [pathname]);
 
   if (!fontLoaded || fontError) {
     return null;

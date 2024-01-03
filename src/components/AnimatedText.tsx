@@ -14,8 +14,11 @@ export const AnimatedText = ({ children }: { children: string }) => {
   useEffect(() => {
     if (!children) return;
     const arr1 = children.split('');
-    const arr2 = [];
-    arr1.forEach((char, i) => (arr2[i] = randomChar()));
+    const arr2: string[] = [];
+    arr1.map((_, i) => {
+      const char = randomChar();
+      arr2[i] = char;
+    });
     console.info(arr1, arr2);
 
     let step = 0;
@@ -24,7 +27,10 @@ export const AnimatedText = ({ children }: { children: string }) => {
       const p = Math.floor(value * arr1.length);
       if (step !== p) {
         step = p;
-        arr1.forEach((char, i) => (arr2[i] = randomChar()));
+        arr1.map((_, i) => {
+          const char = randomChar();
+          arr2[i] = char;
+        });
         const pt1 = arr1.join('').substring(p, 0);
         const pt2 = arr2.join('').substring(arr2.length - p, 0);
         setText(pt1 + pt2);
