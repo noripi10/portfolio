@@ -10,6 +10,7 @@ export const AnimatedText = ({ children }: { children: string }) => {
   const [text, setText] = useState('  ');
 
   const animated = useRef(new Animated.Value(0)).current;
+  const animated2 = useRef(new Animated.Value(0.5)).current;
 
   useEffect(() => {
     if (!children) return;
@@ -37,17 +38,26 @@ export const AnimatedText = ({ children }: { children: string }) => {
       }
     });
 
-    Animated.timing(animated, {
-      toValue: 1.1,
-      duration: 200 * arr1.length,
-      easing: Easing.inOut(Easing.exp),
-      useNativeDriver: false,
-      delay: 100,
-    }).start();
-  }, [children, animated]);
+    Animated.parallel([
+      Animated.timing(animated, {
+        toValue: 1.1,
+        duration: 200 * arr1.length,
+        easing: Easing.inOut(Easing.exp),
+        useNativeDriver: false,
+        delay: 100,
+      }),
+      Animated.timing(animated2, {
+        toValue: 1,
+        duration: 200 * arr1.length,
+        easing: Easing.inOut(Easing.exp),
+        useNativeDriver: false,
+        delay: 100,
+      }),
+    ]).start();
+  }, [children, animated, animated2]);
 
   return (
-    <Animated.View style={{ opacity: animated }}>
+    <Animated.View style={{ opacity: animated, transform: [{ scale: animated2 }] }}>
       <NativeText style={[{ fontSize: isXS ? 36 : 44, paddingVertical: 20 }]}>{text}</NativeText>
     </Animated.View>
   );

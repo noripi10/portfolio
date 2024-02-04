@@ -1,16 +1,13 @@
 import { StyleSheet, ScrollView, View, Platform } from 'react-native';
-import { Image } from 'expo-image';
 
 import { Footer } from '@/components/Footer';
 import { NativeText } from '@/components/Text';
 import { AnimatedText } from '@/components/AnimatedText';
-import { useWidth } from '@/hooks/useWidth';
+import { MainVisual } from '@/components/MainVisual';
 
 const CustomView = Platform.OS === 'web' ? View : ScrollView;
 
 export default function IndexPage() {
-  const { width } = useWidth();
-
   return (
     <CustomView style={styles.container}>
       <View style={styles.mainView}>
@@ -18,22 +15,7 @@ export default function IndexPage() {
           <AnimatedText>I'm Hironori Sugiyama</AnimatedText>
         </View>
 
-        <View style={styles.imageContainer}>
-          <View>
-            <Image
-              style={[styles.image, { width: width * 0.8, maxWidth: 540 }]}
-              source={require('@assets/me.webp')}
-              contentFit='cover'
-              transition={1000}
-            />
-            <Image
-              style={[styles.avatar]}
-              source={require('@assets/avatar.png')}
-              contentFit='contain'
-              transition={1000}
-            />
-          </View>
-        </View>
+        <MainVisual />
 
         <View style={{ flex: 1, alignItems: 'center', rowGap: 32, padding: 32 }}>
           <NativeText style={{ fontSize: 20 }}>Japan (Gifu)</NativeText>
@@ -63,23 +45,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     rowGap: 8,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    position: 'relative',
-  },
-  image: {
-    borderRadius: 8,
-    aspectRatio: 16 / 9,
-  },
-  avatar: {
-    position: 'absolute',
-    top: 4,
-    left: 4,
-    width: 64,
-    height: 64,
-    borderRadius: 100,
   },
 });
