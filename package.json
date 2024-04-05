@@ -11,7 +11,7 @@
     "format": "prettier --write ./src/**/*.tsx",
     "publish:web": "bun rss && expo export -p web",
     "preview:web": "bunx serve dist",
-    "rss": "bunx ts-node ./src/scripts/rss.ts",
+    "rss": "bun ./src/scripts/rss.ts",
     "rss:node": "node -r esbuild-register ./src/scripts/rss.ts"
   },
   "dependencies": {
