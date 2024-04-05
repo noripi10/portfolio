@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "lint": "eslint --fix ./src/**/*.tsx",
     "format": "prettier --write ./src/**/*.tsx",
-    "publish:web": "expo export -p web",
+    "publish:web": "bun expo export -p web",
     "preview:web": "bunx serve dist",
     "rss": "bun ./src/scripts/rss.ts",
     "rss:node": "node -r esbuild-register ./src/scripts/rss.ts"
