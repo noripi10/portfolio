@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   heading: {
-    fontSize: 44,
-    alignSelf: 'center',
+    paddingTop: 12,
+    fontSize: 32,
+    margin: 'auto',
   },
 });
