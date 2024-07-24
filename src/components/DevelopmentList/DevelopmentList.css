@@ -1,4 +1,4 @@
-.cardContainer {
+.card-container {
   display: grid;
   gap: 24px;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -24,11 +24,22 @@
   font-size: 1.2rem;
 }
 
+.card-image-container {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
 .card-image {
   width: 100%;
   aspect-ratio: 5/ 4;
   max-height: 320px;
   object-fit: cover;
+  border-radius: 8px;
+  transition-duration: 600ms;
+}
+
+.card-image:hover {
+  scale: 1.05;
   border-radius: 8px;
 }
 

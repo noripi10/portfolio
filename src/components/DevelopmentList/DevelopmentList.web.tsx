@@ -4,11 +4,13 @@ import './DevelopmentList.css';
 
 export const DevelopmentList = () => {
   return (
-    <div className='cardContainer'>
+    <div className='card-container'>
       {Develop.map((item) => (
         <div key={item.name} className='card'>
           <h1 className='card-title'>{item.name}</h1>
-          <img src={item.url} className='card-image' alt='' />
+          <div className='card-image-container'>
+            <img src={item.url} className='card-image' alt='' />
+          </div>
           <p className='description'>{item.description}</p>
           <div className='card-list'>
             {item.technology.map((tech) => (
