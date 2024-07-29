@@ -1,5 +1,4 @@
 {
-  "biome.enabled": false,
   "yaml.schemas": {
     "https://www.graphql-code-generator.com/config.schema.json": ["codegen.yml"],
     "https://json.schemastore.org/github-workflow.json": "file:///Users/sugiyamahironori/react-native/expo/me/.github/workflows/deploy.yml"
