@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -6,7 +6,14 @@ import { useWidth } from '@/hooks/useWidth';
 import { NavLinks } from './NavLinks';
 import { NativeText } from './Text';
 import { useTheme } from '@react-navigation/native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 import { useEffect } from 'react';
 
 const MAX_WIDTH = 300;
@@ -18,6 +25,7 @@ export const SideBar = () => {
   const { isXS, isMD, isLG } = useWidth();
   const theme = useTheme();
   const width = useSharedValue(0);
+  const lg = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -27,13 +35,22 @@ export const SideBar = () => {
     };
   }, [width, theme.dark]);
 
+  const animatedAlign = useAnimatedStyle(() => {
+    return {
+      alignItems: 'flex-start',
+      paddingLeft: interpolate(lg.value, [0, 1], [24, 16]),
+    };
+  });
+
   useEffect(() => {
     if (isLG) {
       width.value = withSpring(MAX_WIDTH, { mass: 0.5, damping: 12 });
+      lg.value = 1;
     } else {
       width.value = withSpring(MIN_WIDTH, { mass: 0.5, damping: 18, stiffness: 80 });
+      lg.value = withDelay(200, withTiming(0));
     }
-  }, [isLG, width]);
+  }, [isLG, width, lg]);
 
   if (isXS) {
     return <></>;
@@ -49,9 +66,9 @@ export const SideBar = () => {
         <NativeText style={[styles.appName, !isLG && { fontSize: 30, fontWeight: '600' }]}>H.S.</NativeText>
       </TouchableOpacity>
 
-      <View style={[styles.colHeaderLinks, { alignItems: isXS ? 'center' : 'flex-start' }]}>
+      <Animated.View style={[styles.colHeaderLinks, animatedAlign]}>
         <NavLinks dispIcon={isMD} dispText={isLG} />
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 };
