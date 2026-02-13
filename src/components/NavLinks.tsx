@@ -30,7 +30,6 @@ const NavLink = ({
   const theme = useTheme();
 
   return (
-    // @ts-expect-error
     <Link href={to}>
       <View style={styles.linkContainer}>
         {dispIcon && <Icon name={name} width={28} height={28} fill={theme.colors.text} />}

@@ -1,6 +1,6 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import type { PropsWithChildren } from 'react';
-import { GOOGLE_ANALYTICS_ID } from '@/lib/ga';
+import { GOOGLE_ANALYTICS_ID } from '@/libs/ga';
 
 // This file is web-only and used to configure the root HTML for every
 // web page during static rendering.

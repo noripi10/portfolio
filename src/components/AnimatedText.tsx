@@ -10,7 +10,7 @@ export const AnimatedText = ({ children }: { children: string }) => {
   const [text, setText] = useState('  ');
 
   const animated = useRef(new Animated.Value(0)).current;
-  const animated2 = useRef(new Animated.Value(0.5)).current;
+  const animated2 = useRef(new Animated.Value(0.7)).current;
 
   useEffect(() => {
     if (!children) return;
@@ -43,14 +43,14 @@ export const AnimatedText = ({ children }: { children: string }) => {
         toValue: 1.1,
         duration: 200 * arr1.length,
         easing: Easing.inOut(Easing.exp),
-        useNativeDriver: false,
+        useNativeDriver: true,
         delay: 100,
       }),
       Animated.timing(animated2, {
         toValue: 1,
         duration: 200 * arr1.length,
         easing: Easing.inOut(Easing.exp),
-        useNativeDriver: false,
+        useNativeDriver: true,
         delay: 100,
       }),
     ]).start();
