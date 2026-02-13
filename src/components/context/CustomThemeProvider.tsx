@@ -2,12 +2,13 @@ import React, { Dispatch, useContext } from 'react';
 import { Theme, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useLocalStorage } from 'react-use';
 
-const customDarkTheme = {
+const customDarkTheme: Theme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
     background: '#111',
   },
+  fonts: DarkTheme.fonts,
 };
 
 export const CustomThemeContext = React.createContext<{
