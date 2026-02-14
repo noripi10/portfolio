@@ -1,5 +1,6 @@
-import { useTheme } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
+
+import { useTheme } from '@react-navigation/native';
 
 export const Backgound = () => {
   const theme = useTheme();

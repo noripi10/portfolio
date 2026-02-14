@@ -1,5 +1,5 @@
-import { NativeText } from './Text';
 import { useCustomTheme } from './context/CustomThemeProvider';
+import { NativeText } from './Text';
 
 export const ColorModeToggle = () => {
   const { setColorMode } = useCustomTheme();

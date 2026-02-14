@@ -1,8 +1,9 @@
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing } from 'react-native';
 
-import { NativeText } from './Text';
 import { useWidth } from '@/hooks/useWidth';
+
+import { NativeText } from './Text';
 
 export const AnimatedText = ({ children }: { children: string }) => {
   const { isXS } = useWidth();

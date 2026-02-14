@@ -1,9 +1,10 @@
 import { StyleSheet, View } from 'react-native';
+
+import { useTheme } from '@react-navigation/native';
 import { Link } from 'expo-router';
 
 import { Icon, IconName } from './Icon';
 import { NativeText } from './Text';
-import { useTheme } from '@react-navigation/native';
 
 export const NavLinks = ({ dispIcon = true, dispText = true }: { dispIcon?: boolean; dispText?: boolean }) => {
   return (

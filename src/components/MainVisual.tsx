@@ -1,7 +1,9 @@
-import { useWidth } from '@/hooks/useWidth';
-import { Image } from 'expo-image';
 import { useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
+
+import { Image } from 'expo-image';
+
+import { useWidth } from '@/hooks/useWidth';
 
 export const MainVisual = () => {
   const { width } = useWidth();

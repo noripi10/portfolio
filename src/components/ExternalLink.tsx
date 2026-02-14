@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+
 import { Link } from 'expo-router';
 
 export const ExternalLink = (props: Omit<React.ComponentProps<typeof Link>, 'href'> & { href: string }) => {

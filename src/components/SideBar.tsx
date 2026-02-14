@@ -1,10 +1,8 @@
+import { useEffect } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
 
-import { useWidth } from '@/hooks/useWidth';
-import { NavLinks } from './NavLinks';
-import { NativeText } from './Text';
 import { useTheme } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -13,7 +11,11 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useEffect } from 'react';
+
+import { useWidth } from '@/hooks/useWidth';
+
+import { NavLinks } from './NavLinks';
+import { NativeText } from './Text';
 
 const MAX_WIDTH = 300;
 const MIN_WIDTH = 92;

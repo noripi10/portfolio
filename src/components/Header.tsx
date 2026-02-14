@@ -1,10 +1,11 @@
-import { StyleSheet, Platform, View, useWindowDimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Platform, StyleSheet, useWindowDimensions, View } from 'react-native';
+
+import { useTheme } from '@react-navigation/native';
 import { Link } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { NavLinks } from './NavLinks';
 import { NativeText } from './Text';
-import { useTheme } from '@react-navigation/native';
 
 export const MobileHeader = () => {
   const { top } = useSafeAreaInsets();
@@ -34,6 +35,7 @@ export const MobileHeader = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
+    // @ts-expect-error
     position: 'sticky',
     top: 0,
     left: 0,

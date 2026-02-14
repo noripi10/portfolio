@@ -1,8 +1,9 @@
 import { View } from 'react-native';
+
 import { Image } from 'expo-image';
 
-import { NativeText } from '@/components/Text';
 import { ExternalLink } from '@/components/ExternalLink';
+import { NativeText } from '@/components/Text';
 import Rss from '@/constants/rss/rss.json';
 
 // @ts-expect-error
