@@ -1,5 +1,6 @@
-import { useTheme } from '@react-navigation/native';
 import { Text, TextProps } from 'react-native';
+
+import { useTheme } from '@react-navigation/native';
 
 export const NativeText = ({ style, ...props }: TextProps) => {
   const theme = useTheme();

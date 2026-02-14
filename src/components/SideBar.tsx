@@ -1,11 +1,8 @@
-import { StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useEffect } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 
-import { useWidth } from '@/hooks/useWidth';
-import { NavLinks } from './NavLinks';
-import { NativeText } from './Text';
 import { useTheme } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -14,7 +11,11 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { useEffect } from 'react';
+
+import { useWidth } from '@/hooks/useWidth';
+
+import { NavLinks } from './NavLinks';
+import { NativeText } from './Text';
 
 const MAX_WIDTH = 300;
 const MIN_WIDTH = 92;
@@ -44,10 +45,10 @@ export const SideBar = () => {
 
   useEffect(() => {
     if (isLG) {
-      width.value = withSpring(MAX_WIDTH, { mass: 0.5, damping: 12 });
+      width.value = withSpring(MAX_WIDTH, { mass: 0.5, damping: 24 });
       lg.value = 1;
     } else {
-      width.value = withSpring(MIN_WIDTH, { mass: 0.5, damping: 18, stiffness: 80 });
+      width.value = withSpring(MIN_WIDTH, { mass: 0.5, damping: 24, stiffness: 80 });
       lg.value = withDelay(200, withTiming(0));
     }
   }, [isLG, width, lg]);
@@ -58,13 +59,13 @@ export const SideBar = () => {
 
   return (
     <Animated.View style={[styles.sidebar, animatedStyle]}>
-      <TouchableOpacity
+      <Pressable
         onPress={() => {
           router.push('/');
         }}
       >
         <NativeText style={[styles.appName, !isLG && { fontSize: 30, fontWeight: '600' }]}>H.S.</NativeText>
-      </TouchableOpacity>
+      </Pressable>
 
       <Animated.View style={[styles.colHeaderLinks, animatedAlign]}>
         <NavLinks dispIcon={isMD} dispText={isLG} />

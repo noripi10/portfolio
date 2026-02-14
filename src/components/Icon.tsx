@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { SvgProps } from 'react-native-svg';
 
 const svgIcons = require.context('../../assets/svg', true, /\.*/, 'sync');
