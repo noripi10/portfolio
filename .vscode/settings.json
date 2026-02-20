@@ -1,7 +1,12 @@
 {
   "yaml.schemas": {
-    "https://www.graphql-code-generator.com/config.schema.json": ["codegen.yml"],
     "https://json.schemastore.org/github-workflow.json": "file:///Users/sugiyamahironori/react-native/expo/me/.github/workflows/deploy.yml"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always"
+  },
+  "oxc.typeAware": true,
+  "oxc.fmt.configPath": ".oxfmtrc.json",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true
 }

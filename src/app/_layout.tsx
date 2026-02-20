@@ -12,7 +12,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { CustomThemeProvider, useCustomTheme } from '@/components/context/CustomThemeProvider';
 import { pageview } from '@/libs/ga';
 
-
 export const unstable_settings = {
   initialRouteName: '(root)',
 };

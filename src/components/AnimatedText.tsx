@@ -58,7 +58,14 @@ export const AnimatedText = ({ children }: { children: string }) => {
   }, [children, animated, animated2]);
 
   return (
-    <Animated.View style={{ height: 80, overflow: 'hidden', opacity: animated, transform: [{ scale: animated2 }] }}>
+    <Animated.View
+      style={{
+        height: 80,
+        overflow: 'hidden',
+        opacity: animated,
+        transform: [{ scale: animated2 }],
+      }}
+    >
       <NativeText style={[{ fontSize: isXS ? 32 : 40, paddingVertical: 20 }]}>{text}</NativeText>
     </Animated.View>
   );

@@ -34,5 +34,6 @@ parse().then(async (rss) => {
     fs.writeFile('./src/constants/rss/rss.json', json);
   } catch (error) {
     console.error('[Error] rss file create');
+    console.error(error);
   }
 });
