@@ -15,7 +15,8 @@
     "publish:web": "bun rss && expo export -p web",
     "preview:web": "bunx serve dist",
     "rss": "bunx tsx ./src/scripts/rss.ts",
-    "rss:node": "node -r esbuild-register ./src/scripts/rss.ts"
+    "rss:node": "node -r esbuild-register ./src/scripts/rss.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
@@ -52,12 +53,17 @@
     "esbuild": "^0.19.2",
     "esbuild-register": "^3.4.2",
     "globals": "^17.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "oxfmt": "^0.34.0",
     "oxlint": "^1.49.0",
     "prettier": "^3.0.3",
     "react-native-svg-transformer": "^1.1.0",
     "rss-parser": "^3.13.0",
     "ts-node": "^10.9.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": "bun lint"
   },
   "engines": {
     "node": ">=22"
