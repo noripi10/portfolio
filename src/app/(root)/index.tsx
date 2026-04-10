@@ -5,11 +5,11 @@ import { NativeText } from '@/components/Text';
 import { AnimatedText } from '@/components/AnimatedText';
 import { MainVisual } from '@/components/MainVisual';
 
-const CustomView = Platform.OS === 'web' ? View : ScrollView;
+const PlatformView = Platform.OS === 'web' ? View : ScrollView;
 
 export default function IndexPage() {
   return (
-    <CustomView style={styles.container}>
+    <PlatformView style={styles.container}>
       <View style={styles.mainView}>
         <View style={{ marginHorizontal: 'auto' }}>
           <AnimatedText>I'm Hironori Sugiyama</AnimatedText>
@@ -32,7 +32,7 @@ export default function IndexPage() {
       </View>
 
       <Footer />
-    </CustomView>
+    </PlatformView>
   );
 }
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     rowGap: 8,
   },
 });

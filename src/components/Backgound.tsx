@@ -10,6 +10,7 @@ export const Backgound = () => {
       style={[
         styles.background,
         {
+          // @ts-expect-error
           backgroundImage: 'url(/images/grid.svg)',
           backgroundColor: theme.colors.background,
         },

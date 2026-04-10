@@ -2,13 +2,13 @@ import { StyleSheet, View } from 'react-native';
 
 import { useTheme } from '@react-navigation/native';
 
-import Expo from '@assets/svg/expo.svg';
 import Github from '@assets/svg/github.svg';
 import Email from '@assets/svg/mail.svg';
 import X from '@assets/svg/x.svg';
 
 import { ExternalLink } from './ExternalLink';
 import { NativeText } from './Text';
+import { Cube } from './Cube';
 
 export const Footer = () => {
   const color = useTheme().colors.text;
@@ -30,8 +30,9 @@ export const Footer = () => {
       </View>
 
       <NativeText style={{ color }}>Powered by Expo</NativeText>
+
       <ExternalLink href='https://expo.dev/'>
-        <Expo width={32} height={32} fill={color} />
+        <Cube />
       </ExternalLink>
     </View>
   );
