@@ -65,6 +65,9 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": "bun lint"
   },
+  "overrides": {
+    "ws": "^8.19.0"
+  },
   "engines": {
     "node": ">=22"
   }
