@@ -5,7 +5,7 @@ import { NativeText } from '@/components/Text';
 import { AnimatedText } from '@/components/AnimatedText';
 import { MainVisual } from '@/components/MainVisual';
 
-const PlatformView = Platform.OS === 'web' ? View : ScrollView;
+const PlatformView = Platform.OS === 'web' ? ScrollView : ScrollView;
 
 export default function IndexPage() {
   return (
