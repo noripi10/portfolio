@@ -1,6 +1,6 @@
 import { Platform, StyleSheet, useWindowDimensions, View } from 'react-native';
 
-import { useTheme } from '@react-navigation/native';
+import { useTheme } from "expo-router/react-navigation";
 import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

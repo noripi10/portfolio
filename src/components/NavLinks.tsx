@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import { useTheme } from '@react-navigation/native';
+import { useTheme } from "expo-router/react-navigation";
 import { Link } from 'expo-router';
 
 import { Icon, IconName } from './Icon';
@@ -24,7 +24,7 @@ const NavLink = ({
 }: {
   to: string;
   description: string;
-  name: IconName | undefined;
+  name: IconName;
   dispIcon: boolean;
   dispText: boolean;
 }) => {

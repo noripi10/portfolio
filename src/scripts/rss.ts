@@ -8,12 +8,12 @@ const parse = async () => {
   const feed = await parser.parseURL('https://zenn.dev/noripi10/feed');
 
   const items = feed.items.map((item) => ({
-    id: item.guid.split('/').pop(),
+    id: item.guid?.split('/').pop(),
     title: item.title,
     link: item.link,
     isoData: dayjs(item.isoDate).format('YYYY/MM/DD(ddd) HH:mm'),
-    contentSnippet: item.contentSnippet.replace(/\n/g, ''),
-    og: item.enclosure.url,
+    contentSnippet: item.contentSnippet?.replace(/\n/g, ''),
+    og: item.enclosure?.url,
   }));
 
   items.sort((a, b) => {

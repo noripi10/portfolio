@@ -12,6 +12,10 @@ const png2Jpeg = async () => {
     },
   });
 
+  if (!values.input || !values.out) {
+    throw new Error('--input and --out are required');
+  }
+
   await sharp(values.input).toFile(values.out);
 };
 

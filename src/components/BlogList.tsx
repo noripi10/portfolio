@@ -6,7 +6,6 @@ import { ExternalLink } from '@/components/ExternalLink';
 import { NativeText } from '@/components/Text';
 import Rss from '@/constants/rss/rss.json';
 
-// @ts-expect-error
 import { unstable_styles as styles } from './BlogList.module.css';
 
 type RssItemProp = (typeof Rss)[0];

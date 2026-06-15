@@ -20,8 +20,8 @@ export const DevelopmentList = () => {
             ))}
           </div>
           <div className='card-list'>
-            {Object.keys(item.stores).map((key) => (
-              <ExternalLink key={key} href={item.stores[key]}>
+            {Object.entries(item.stores).map(([key, href]) => (
+              <ExternalLink key={key} href={href}>
                 <img
                   className={`card-store-img-${key}`}
                   alt={key}

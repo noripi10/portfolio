@@ -12,10 +12,11 @@ export const MainVisual = () => {
   const [rect, setRect] = useState<DOMRect>();
 
   useEffect(() => {
-    if (!ref.current) return;
+    const element = ref.current;
+    if (!element) return;
 
     const handler = () => {
-      const _rect = ref.current.getBoundingClientRect();
+      const _rect = element.getBoundingClientRect();
       setRect(_rect);
     };
 
