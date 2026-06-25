@@ -1,6 +1,5 @@
-import { View } from 'react-native';
-
 import { Image } from 'expo-image';
+import { View } from 'react-native';
 
 import { ExternalLink } from '@/components/ExternalLink';
 import { NativeText } from '@/components/Text';

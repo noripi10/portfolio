@@ -1,9 +1,8 @@
-import { parseArgs } from 'node:util';
-
 import chalk from 'chalk';
+import { parseArgs } from 'node:util';
 import sharp from 'sharp';
 
-const png2Jpeg = async () => {
+const imageChange = async () => {
   const { values } = parseArgs({
     args: process.argv.slice(2),
     options: {
@@ -19,7 +18,7 @@ const png2Jpeg = async () => {
   await sharp(values.input).toFile(values.out);
 };
 
-png2Jpeg()
+imageChange()
   .then(() => {
     console.log(chalk.green('Sharp export image success.'));
     process.exit(0);

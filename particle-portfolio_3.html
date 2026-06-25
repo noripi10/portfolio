@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YUKI — Portfolio</title>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YUKI — Portfolio</title>
+    <!--
   ============================================================
   パーティクル + ヘリックスカード ポートフォリオ LP (v2)
   ------------------------------------------------------------
@@ -22,455 +22,747 @@
     の5形状を頂点シェーダーで GPU モーフィング
   ============================================================
 -->
-<style>
-  :root{
-    --ink:#eef1f7;
-    --ink-dim:rgba(238,241,247,.6);
-    --ink-faint:rgba(238,241,247,.3);
-    --hair:rgba(238,241,247,.16);
-    --accent:#ffd27a;
-    --mono:"JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
-    --disp:"Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", sans-serif;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    background:#05060d;
-    color:var(--ink);
-    font-family:var(--mono);
-    overflow-x:hidden;
-  }
-  .scroll-space{height:640vh}
+    <style>
+      :root {
+        --ink: #eef1f7;
+        --ink-dim: rgba(238, 241, 247, 0.6);
+        --ink-faint: rgba(238, 241, 247, 0.3);
+        --hair: rgba(238, 241, 247, 0.16);
+        --accent: #ffd27a;
+        --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+        --disp: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #05060d;
+        color: var(--ink);
+        font-family: var(--mono);
+        overflow-x: hidden;
+      }
+      .scroll-space {
+        height: 640vh;
+      }
 
-  canvas#gl{position:fixed; inset:0; width:100%; height:100%; display:block}
+      canvas#gl {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
 
-  /* ---------- 共通UI ---------- */
-  .ui{position:fixed; z-index:10}
+      /* ---------- 共通UI ---------- */
+      .ui {
+        position: fixed;
+        z-index: 10;
+      }
 
-  header.ui{
-    top:0; left:0; right:0;
-    display:flex; justify-content:space-between; align-items:center;
-    padding:22px 28px;
-  }
-  .logo{
-    font-family:var(--disp); font-weight:800; font-size:18px;
-    letter-spacing:.16em; cursor:pointer; user-select:none;
-    text-shadow:0 2px 18px rgba(0,0,0,.9);
-  }
-  .logo small{color:var(--ink-dim); font-weight:400; font-family:var(--mono); font-size:10px; margin-left:10px; letter-spacing:.2em}
-  nav.pill{
-    display:flex; align-items:center; gap:14px;
-    border:1px solid var(--hair);
-    border-radius:999px;
-    padding:9px 20px;
-    backdrop-filter:blur(8px);
-    background:rgba(6,8,15,.55);
-    font-size:11px; letter-spacing:.22em;
-  }
-  nav.pill a{color:var(--ink-dim); text-decoration:none; cursor:pointer; transition:color .25s}
-  nav.pill a:hover, nav.pill a:focus-visible{color:var(--ink)}
-  nav.pill a:focus-visible{outline:1px solid var(--accent); outline-offset:3px}
-  nav.pill .wave{color:var(--ink-faint); font-size:13px}
+      header.ui {
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px 28px;
+      }
+      .logo {
+        font-family: var(--disp);
+        font-weight: 800;
+        font-size: 18px;
+        letter-spacing: 0.16em;
+        cursor: pointer;
+        user-select: none;
+        text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
+      }
+      .logo small {
+        color: var(--ink-dim);
+        font-weight: 400;
+        font-family: var(--mono);
+        font-size: 10px;
+        margin-left: 10px;
+        letter-spacing: 0.2em;
+      }
+      nav.pill {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border: 1px solid var(--hair);
+        border-radius: 999px;
+        padding: 9px 20px;
+        backdrop-filter: blur(8px);
+        background: rgba(6, 8, 15, 0.55);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+      }
+      nav.pill a {
+        color: var(--ink-dim);
+        text-decoration: none;
+        cursor: pointer;
+        transition: color 0.25s;
+      }
+      nav.pill a:hover,
+      nav.pill a:focus-visible {
+        color: var(--ink);
+      }
+      nav.pill a:focus-visible {
+        outline: 1px solid var(--accent);
+        outline-offset: 3px;
+      }
+      nav.pill .wave {
+        color: var(--ink-faint);
+        font-size: 13px;
+      }
 
-  .rail{
-    right:26px; top:50%; transform:translateY(-50%);
-    display:flex; flex-direction:column; gap:14px; align-items:center;
-  }
-  .rail button{
-    width:22px; height:3px; border:none; cursor:pointer;
-    background:var(--ink-faint);
-    transition:background .3s, width .3s;
-    padding:0;
-  }
-  .rail button.on{background:var(--ink); width:34px}
-  .rail button:focus-visible{outline:1px solid var(--accent); outline-offset:3px}
+      .rail {
+        right: 26px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+      }
+      .rail button {
+        width: 22px;
+        height: 3px;
+        border: none;
+        cursor: pointer;
+        background: var(--ink-faint);
+        transition:
+          background 0.3s,
+          width 0.3s;
+        padding: 0;
+      }
+      .rail button.on {
+        background: var(--ink);
+        width: 34px;
+      }
+      .rail button:focus-visible {
+        outline: 1px solid var(--accent);
+        outline-offset: 3px;
+      }
 
-  .counter{
-    left:28px; bottom:26px;
-    font-size:11px; letter-spacing:.3em; color:var(--ink-dim);
-    text-shadow:0 1px 10px rgba(0,0,0,.9);
-  }
-  .counter b{color:var(--ink); font-weight:400}
+      .counter {
+        left: 28px;
+        bottom: 26px;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        color: var(--ink-dim);
+        text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
+      }
+      .counter b {
+        color: var(--ink);
+        font-weight: 400;
+      }
 
-  /* ---------- パネル ---------- */
-  .panel{
-    position:fixed; inset:0; z-index:5;
-    display:flex; flex-direction:column; justify-content:center;
-    padding:0 8vw;
-    opacity:0; pointer-events:none;
-    will-change:opacity, transform;
-  }
-  .panel.live{pointer-events:auto}
+      /* ---------- パネル ---------- */
+      .panel {
+        position: fixed;
+        inset: 0;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 8vw;
+        opacity: 0;
+        pointer-events: none;
+        will-change: opacity, transform;
+      }
+      .panel.live {
+        pointer-events: auto;
+      }
 
-  /* テキスト可読性のためのスクリム(中央を暗く沈める) */
-  .panel::before{
-    content:"";
-    position:absolute; inset:-10%;
-    background:radial-gradient(58% 52% at 50% 50%, rgba(3,4,9,.78) 0%, rgba(3,4,9,.45) 45%, transparent 78%);
-    z-index:-1;
-    pointer-events:none;
-  }
-  .panel > *{text-shadow:0 2px 26px rgba(0,0,0,.95), 0 0 2px rgba(0,0,0,.8)}
+      /* テキスト可読性のためのスクリム(中央を暗く沈める) */
+      .panel::before {
+        content: '';
+        position: absolute;
+        inset: -10%;
+        background: radial-gradient(
+          58% 52% at 50% 50%,
+          rgba(3, 4, 9, 0.78) 0%,
+          rgba(3, 4, 9, 0.45) 45%,
+          transparent 78%
+        );
+        z-index: -1;
+        pointer-events: none;
+      }
+      .panel > * {
+        text-shadow:
+          0 2px 26px rgba(0, 0, 0, 0.95),
+          0 0 2px rgba(0, 0, 0, 0.8);
+      }
 
-  .eyebrow{font-size:11px; letter-spacing:.34em; color:var(--ink-dim); margin-bottom:22px}
-  .eyebrow i{font-style:normal; color:var(--accent)}
-  h1,h2{
-    font-family:var(--disp); font-weight:800;
-    letter-spacing:-.015em; text-transform:uppercase; line-height:.98;
-  }
-  h1{font-size:clamp(44px, 8.5vw, 118px)}
-  h2{font-size:clamp(34px, 6vw, 84px)}
-  .sub{
-    margin-top:26px; max-width:520px;
-    font-size:13px; line-height:2; color:var(--ink-dim);
-    letter-spacing:.04em;
-  }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.34em;
+        color: var(--ink-dim);
+        margin-bottom: 22px;
+      }
+      .eyebrow i {
+        font-style: normal;
+        color: var(--accent);
+      }
+      h1,
+      h2 {
+        font-family: var(--disp);
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        text-transform: uppercase;
+        line-height: 0.98;
+      }
+      h1 {
+        font-size: clamp(44px, 8.5vw, 118px);
+      }
+      h2 {
+        font-size: clamp(34px, 6vw, 84px);
+      }
+      .sub {
+        margin-top: 26px;
+        max-width: 520px;
+        font-size: 13px;
+        line-height: 2;
+        color: var(--ink-dim);
+        letter-spacing: 0.04em;
+      }
 
-  #p0{align-items:center; text-align:center}
-  #p0 .sub{margin-left:auto; margin-right:auto}
-  .scroll-cue{
-    position:absolute; bottom:42px; left:50%; transform:translateX(-50%);
-    font-size:10px; letter-spacing:.4em; color:var(--ink-dim);
-    display:flex; flex-direction:column; align-items:center; gap:12px;
-  }
-  .scroll-cue::after{
-    content:""; width:1px; height:46px;
-    background:linear-gradient(var(--ink), transparent);
-    animation:drip 2.2s ease-in-out infinite;
-  }
-  @keyframes drip{
-    0%{transform:scaleY(0); transform-origin:top}
-    45%{transform:scaleY(1); transform-origin:top}
-    55%{transform:scaleY(1); transform-origin:bottom}
-    100%{transform:scaleY(0); transform-origin:bottom}
-  }
+      #p0 {
+        align-items: center;
+        text-align: center;
+      }
+      #p0 .sub {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .scroll-cue {
+        position: absolute;
+        bottom: 42px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 10px;
+        letter-spacing: 0.4em;
+        color: var(--ink-dim);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .scroll-cue::after {
+        content: '';
+        width: 1px;
+        height: 46px;
+        background: linear-gradient(var(--ink), transparent);
+        animation: drip 2.2s ease-in-out infinite;
+      }
+      @keyframes drip {
+        0% {
+          transform: scaleY(0);
+          transform-origin: top;
+        }
+        45% {
+          transform: scaleY(1);
+          transform-origin: top;
+        }
+        55% {
+          transform: scaleY(1);
+          transform-origin: bottom;
+        }
+        100% {
+          transform: scaleY(0);
+          transform-origin: bottom;
+        }
+      }
 
-  .works{margin-top:34px; border-top:1px solid var(--hair); max-width:760px}
-  .work{
-    display:flex; justify-content:space-between; align-items:baseline; gap:20px;
-    padding:18px 4px;
-    border-bottom:1px solid var(--hair);
-    text-decoration:none; color:var(--ink);
-    transition:padding-left .3s, background .3s;
-  }
-  .work:hover, .work:focus-visible{padding-left:18px; background:rgba(255,255,255,.04)}
-  .work:focus-visible{outline:1px solid var(--accent); outline-offset:-1px}
-  .work .t{font-family:var(--disp); font-weight:700; font-size:clamp(16px,2vw,24px); letter-spacing:.01em}
-  .work .tag{font-size:10px; letter-spacing:.24em; color:var(--ink-dim); white-space:nowrap}
-  .work .no{font-size:10px; color:var(--ink-faint); margin-right:14px}
+      .works {
+        margin-top: 34px;
+        border-top: 1px solid var(--hair);
+        max-width: 760px;
+      }
+      .work {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 20px;
+        padding: 18px 4px;
+        border-bottom: 1px solid var(--hair);
+        text-decoration: none;
+        color: var(--ink);
+        transition:
+          padding-left 0.3s,
+          background 0.3s;
+      }
+      .work:hover,
+      .work:focus-visible {
+        padding-left: 18px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .work:focus-visible {
+        outline: 1px solid var(--accent);
+        outline-offset: -1px;
+      }
+      .work .t {
+        font-family: var(--disp);
+        font-weight: 700;
+        font-size: clamp(16px, 2vw, 24px);
+        letter-spacing: 0.01em;
+      }
+      .work .tag {
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        color: var(--ink-dim);
+        white-space: nowrap;
+      }
+      .work .no {
+        font-size: 10px;
+        color: var(--ink-faint);
+        margin-right: 14px;
+      }
 
-  .caps{margin-top:36px; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:26px 48px; max-width:740px}
-  .cap .k{font-size:10px; letter-spacing:.3em; color:var(--accent); margin-bottom:10px}
-  .cap .v{font-size:12px; line-height:1.9; color:var(--ink-dim)}
+      .caps {
+        margin-top: 36px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 26px 48px;
+        max-width: 740px;
+      }
+      .cap .k {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .cap .v {
+        font-size: 12px;
+        line-height: 1.9;
+        color: var(--ink-dim);
+      }
 
-  #p4{align-items:center; text-align:center}
-  .mail{
-    margin-top:34px; display:inline-block;
-    font-family:var(--mono); font-size:clamp(13px,1.8vw,18px); letter-spacing:.12em;
-    color:var(--ink); text-decoration:none;
-    border:1px solid var(--hair); border-radius:999px;
-    padding:16px 36px;
-    background:rgba(6,8,15,.5);
-    transition:border-color .3s, background .3s;
-  }
-  .mail:hover, .mail:focus-visible{border-color:var(--ink); background:rgba(255,255,255,.06)}
-  .links{margin-top:22px; font-size:11px; letter-spacing:.26em; color:var(--ink-dim)}
-  .links a{color:var(--ink-dim); text-decoration:none}
-  .links a:hover{color:var(--ink)}
+      #p4 {
+        align-items: center;
+        text-align: center;
+      }
+      .mail {
+        margin-top: 34px;
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: clamp(13px, 1.8vw, 18px);
+        letter-spacing: 0.12em;
+        color: var(--ink);
+        text-decoration: none;
+        border: 1px solid var(--hair);
+        border-radius: 999px;
+        padding: 16px 36px;
+        background: rgba(6, 8, 15, 0.5);
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      .mail:hover,
+      .mail:focus-visible {
+        border-color: var(--ink);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .links {
+        margin-top: 22px;
+        font-size: 11px;
+        letter-spacing: 0.26em;
+        color: var(--ink-dim);
+      }
+      .links a {
+        color: var(--ink-dim);
+        text-decoration: none;
+      }
+      .links a:hover {
+        color: var(--ink);
+      }
 
-  @media (max-width:768px){
-    header.ui{padding:16px 18px}
-    nav.pill{padding:8px 14px; gap:10px; font-size:10px}
-    .rail{right:12px; gap:11px}
-    .panel{padding:0 7vw}
-    .caps{grid-template-columns:1fr; gap:20px}
-    .counter{left:18px; bottom:18px}
-    .sub{font-size:12px}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .scroll-cue::after{animation:none; transform:none}
-  }
-</style>
-</head>
-<body>
+      @media (max-width: 768px) {
+        header.ui {
+          padding: 16px 18px;
+        }
+        nav.pill {
+          padding: 8px 14px;
+          gap: 10px;
+          font-size: 10px;
+        }
+        .rail {
+          right: 12px;
+          gap: 11px;
+        }
+        .panel {
+          padding: 0 7vw;
+        }
+        .caps {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .counter {
+          left: 18px;
+          bottom: 18px;
+        }
+        .sub {
+          font-size: 12px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .scroll-cue::after {
+          animation: none;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scroll-space" aria-hidden="true"></div>
+    <canvas id="gl"></canvas>
 
-<div class="scroll-space" aria-hidden="true"></div>
-<canvas id="gl"></canvas>
+    <header class="ui">
+      <div class="logo" data-go="0">YUKI<small>PORTFOLIO / 2026</small></div>
+      <nav class="pill" aria-label="primary">
+        <a data-go="2">WORK</a>
+        <span class="wave">~~~~</span>
+        <a data-go="4">CONTACT</a>
+      </nav>
+    </header>
 
-<header class="ui">
-  <div class="logo" data-go="0">YUKI<small>PORTFOLIO / 2026</small></div>
-  <nav class="pill" aria-label="primary">
-    <a data-go="2">WORK</a>
-    <span class="wave">~~~~</span>
-    <a data-go="4">CONTACT</a>
-  </nav>
-</header>
+    <div class="ui rail" role="tablist" aria-label="sections">
+      <button data-go="0" aria-label="Hero"></button>
+      <button data-go="1" aria-label="About"></button>
+      <button data-go="2" aria-label="Works"></button>
+      <button data-go="3" aria-label="Capabilities"></button>
+      <button data-go="4" aria-label="Contact"></button>
+    </div>
 
-<div class="ui rail" role="tablist" aria-label="sections">
-  <button data-go="0" aria-label="Hero"></button>
-  <button data-go="1" aria-label="About"></button>
-  <button data-go="2" aria-label="Works"></button>
-  <button data-go="3" aria-label="Capabilities"></button>
-  <button data-go="4" aria-label="Contact"></button>
-</div>
+    <div class="ui counter"><b id="cNow">01</b> / 05</div>
 
-<div class="ui counter"><b id="cNow">01</b> / 05</div>
+    <!-- 0: HERO -->
+    <section class="panel" id="p0">
+      <div class="eyebrow"><i>●</i>&nbsp; CREATIVE DEVELOPER — SYSTEMS ENGINEER</div>
+      <h1>Order<br />from noise</h1>
+      <p class="sub">
+        散らばった要件を、動くソフトウェアへ。業務システムからインタラクティブな Web
+        表現まで、設計と実装の両輪でかたちにします。
+      </p>
+      <div class="scroll-cue">SCROLL</div>
+    </section>
 
-<!-- 0: HERO -->
-<section class="panel" id="p0">
-  <div class="eyebrow"><i>●</i>&nbsp; CREATIVE DEVELOPER — SYSTEMS ENGINEER</div>
-  <h1>Order<br>from noise</h1>
-  <p class="sub">散らばった要件を、動くソフトウェアへ。業務システムからインタラクティブな Web 表現まで、設計と実装の両輪でかたちにします。</p>
-  <div class="scroll-cue">SCROLL</div>
-</section>
+    <!-- 1: ABOUT -->
+    <section class="panel" id="p1">
+      <div class="eyebrow">01 / ABOUT</div>
+      <h2>Engineer<br />with two hands</h2>
+      <p class="sub">
+        片手で基幹システムを支え、もう片手で体験をつくる。.NET
+        での業務アプリ開発と、WebGL・フロントエンドでの表現探求。堅さと遊びの両方を行き来できることが強みです。
+      </p>
+    </section>
 
-<!-- 1: ABOUT -->
-<section class="panel" id="p1">
-  <div class="eyebrow">01 / ABOUT</div>
-  <h2>Engineer<br>with two hands</h2>
-  <p class="sub">片手で基幹システムを支え、もう片手で体験をつくる。.NET での業務アプリ開発と、WebGL・フロントエンドでの表現探求。堅さと遊びの両方を行き来できることが強みです。</p>
-</section>
+    <!-- 2: WORKS -->
+    <section class="panel" id="p2">
+      <div class="eyebrow">02 / SELECTED WORKS</div>
+      <h2>Works</h2>
+      <div class="works">
+        <a class="work" href="#" tabindex="-1"
+          ><span><span class="no">W-01</span><span class="t">Logistics Reservation Platform</span></span
+          ><span class="tag">SYSTEM DESIGN / WEB</span></a
+        >
+        <a class="work" href="#" tabindex="-1"
+          ><span><span class="no">W-02</span><span class="t">Warehouse Ops Dashboard</span></span
+          ><span class="tag">DATA VIZ / REACT</span></a
+        >
+        <a class="work" href="#" tabindex="-1"
+          ><span><span class="no">W-03</span><span class="t">Particle Portfolio</span></span
+          ><span class="tag">WEBGL / THREE.JS</span></a
+        >
+        <a class="work" href="#" tabindex="-1"
+          ><span><span class="no">W-04</span><span class="t">Internal Tooling Suite</span></span
+          ><span class="tag">.NET / AUTOMATION</span></a
+        >
+      </div>
+    </section>
 
-<!-- 2: WORKS -->
-<section class="panel" id="p2">
-  <div class="eyebrow">02 / SELECTED WORKS</div>
-  <h2>Works</h2>
-  <div class="works">
-    <a class="work" href="#" tabindex="-1"><span><span class="no">W-01</span><span class="t">Logistics Reservation Platform</span></span><span class="tag">SYSTEM DESIGN / WEB</span></a>
-    <a class="work" href="#" tabindex="-1"><span><span class="no">W-02</span><span class="t">Warehouse Ops Dashboard</span></span><span class="tag">DATA VIZ / REACT</span></a>
-    <a class="work" href="#" tabindex="-1"><span><span class="no">W-03</span><span class="t">Particle Portfolio</span></span><span class="tag">WEBGL / THREE.JS</span></a>
-    <a class="work" href="#" tabindex="-1"><span><span class="no">W-04</span><span class="t">Internal Tooling Suite</span></span><span class="tag">.NET / AUTOMATION</span></a>
-  </div>
-</section>
+    <!-- 3: CAPABILITIES -->
+    <section class="panel" id="p3">
+      <div class="eyebrow">03 / CAPABILITIES</div>
+      <h2>What I do</h2>
+      <div class="caps">
+        <div class="cap">
+          <div class="k">FRONTEND</div>
+          <div class="v">React / TypeScript / Three.js / GSAP — インタラクションと情報設計を両立した UI 実装</div>
+        </div>
+        <div class="cap">
+          <div class="k">BACKEND</div>
+          <div class="v">C# / VB.NET / SQL — 業務フローに根ざした堅実なシステム設計と運用</div>
+        </div>
+        <div class="cap">
+          <div class="k">CREATIVE CODING</div>
+          <div class="v">WebGL シェーダー / パーティクル / 生成的ビジュアル表現</div>
+        </div>
+        <div class="cap">
+          <div class="k">OPS &amp; TOOLING</div>
+          <div class="v">社内 IT 基盤 / 自動化 / Git・CI を使った開発フロー整備</div>
+        </div>
+      </div>
+    </section>
 
-<!-- 3: CAPABILITIES -->
-<section class="panel" id="p3">
-  <div class="eyebrow">03 / CAPABILITIES</div>
-  <h2>What I do</h2>
-  <div class="caps">
-    <div class="cap"><div class="k">FRONTEND</div><div class="v">React / TypeScript / Three.js / GSAP — インタラクションと情報設計を両立した UI 実装</div></div>
-    <div class="cap"><div class="k">BACKEND</div><div class="v">C# / VB.NET / SQL — 業務フローに根ざした堅実なシステム設計と運用</div></div>
-    <div class="cap"><div class="k">CREATIVE CODING</div><div class="v">WebGL シェーダー / パーティクル / 生成的ビジュアル表現</div></div>
-    <div class="cap"><div class="k">OPS &amp; TOOLING</div><div class="v">社内 IT 基盤 / 自動化 / Git・CI を使った開発フロー整備</div></div>
-  </div>
-</section>
+    <!-- 4: CONTACT -->
+    <section class="panel" id="p4">
+      <div class="eyebrow">04 / CONTACT</div>
+      <h2>Let's talk</h2>
+      <a class="mail" href="mailto:hello@example.com" tabindex="-1">hello@example.com</a>
+      <div class="links">
+        <a href="#" tabindex="-1">GITHUB</a> &nbsp;·&nbsp; <a href="#" tabindex="-1">X / TWITTER</a>
+      </div>
+    </section>
 
-<!-- 4: CONTACT -->
-<section class="panel" id="p4">
-  <div class="eyebrow">04 / CONTACT</div>
-  <h2>Let's talk</h2>
-  <a class="mail" href="mailto:hello@example.com" tabindex="-1">hello@example.com</a>
-  <div class="links"><a href="#" tabindex="-1">GITHUB</a> &nbsp;·&nbsp; <a href="#" tabindex="-1">X / TWITTER</a></div>
-</section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      (() => {
+        'use strict';
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(() => {
-  'use strict';
-
-  /* ============================================================
+        /* ============================================================
      基本設定
   ============================================================ */
-  const isMobile = matchMedia('(pointer: coarse)').matches || innerWidth < 768;
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const COUNT = isMobile ? 5000 : 14000;
-  const SEGMENTS = 4;
+        const isMobile = matchMedia('(pointer: coarse)').matches || innerWidth < 768;
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const COUNT = isMobile ? 5000 : 14000;
+        const SEGMENTS = 4;
 
-  const canvas = document.getElementById('gl');
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-  renderer.setSize(innerWidth, innerHeight);
+        const canvas = document.getElementById('gl');
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: false,
+          alpha: false,
+          powerPreference: 'high-performance',
+        });
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+        renderer.setSize(innerWidth, innerHeight);
 
-  const scene = new THREE.Scene();
-  /* カメラを引いた遠近構図 */
-  const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 60);
-  camera.position.set(0, 0.2, 6.4);
-  camera.lookAt(0, 0, 0);
+        const scene = new THREE.Scene();
+        /* カメラを引いた遠近構図 */
+        const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 60);
+        camera.position.set(0, 0.2, 6.4);
+        camera.lookAt(0, 0, 0);
 
-  const BG = [
-    new THREE.Color('#05060d'),
-    new THREE.Color('#0b0716'),
-    new THREE.Color('#070a18'),
-    new THREE.Color('#030f0d'),
-    new THREE.Color('#040408'),
-  ];
+        const BG = [
+          new THREE.Color('#05060d'),
+          new THREE.Color('#0b0716'),
+          new THREE.Color('#070a18'),
+          new THREE.Color('#030f0d'),
+          new THREE.Color('#040408'),
+        ];
 
-  /* ============================================================
+        /* ============================================================
      形状ファクトリー
   ============================================================ */
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+        const rand = (a, b) => a + Math.random() * (b - a);
+        const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
 
-  function alloc() {
-    return { pos: new Float32Array(COUNT * 3), col: new Float32Array(COUNT * 3) };
-  }
-  function set(o, i, x, y, z, r, g, b) {
-    o.pos[i * 3] = x; o.pos[i * 3 + 1] = y; o.pos[i * 3 + 2] = z;
-    o.col[i * 3] = r; o.col[i * 3 + 1] = g; o.col[i * 3 + 2] = b;
-  }
+        function alloc() {
+          return { pos: new Float32Array(COUNT * 3), col: new Float32Array(COUNT * 3) };
+        }
+        function set(o, i, x, y, z, r, g, b) {
+          o.pos[i * 3] = x;
+          o.pos[i * 3 + 1] = y;
+          o.pos[i * 3 + 2] = z;
+          o.col[i * 3] = r;
+          o.col[i * 3 + 1] = g;
+          o.col[i * 3 + 2] = b;
+        }
 
-  function shapeRing() {
-    const o = alloc();
-    const R = 1.35;
-    for (let i = 0; i < COUNT; i++) {
-      const u = Math.random();
-      if (u < 0.74) {
-        const th = rand(0, Math.PI * 2);
-        const streak = Math.pow(Math.random(), 2.2) * 0.85;
-        const tilt = rand(-0.5, 0.5);
-        const bx = Math.cos(th) * R, by = Math.sin(th) * R;
-        const tx = -Math.sin(th), ty = Math.cos(th);
-        const nx = Math.cos(th), ny = Math.sin(th);
-        const mixv = rand(0.55, 1.0);
-        const x = bx + (tx * mixv + nx * (1 - mixv)) * streak + gauss() * 0.05;
-        const y = by + (ty * mixv + ny * (1 - mixv)) * streak + gauss() * 0.05;
-        const z = gauss() * 0.22 + Math.sin(th * 2) * 0.18 * tilt;
-        const c = Math.random();
-        if (c < 0.62)      set(o, i, x, y, z, 0.85, 0.78, 0.66);
-        else if (c < 0.88) set(o, i, x, y, z, 0.85, 0.58, 0.30);
-        else               set(o, i, x, y, z, 0.85, 0.28, 0.18);
-      } else if (u < 0.84) {
-        const r = Math.pow(Math.random(), 1.6) * 0.42;
-        const th = rand(0, Math.PI * 2);
-        set(o, i, Math.cos(th) * r, Math.sin(th) * r, gauss() * 0.12, 0.62, 0.70, 0.80);
-      } else {
-        set(o, i, gauss() * 2.8, gauss() * 2.4, gauss() * 1.6, 0.6, 0.5, 0.34);
-      }
-    }
-    return o;
-  }
+        function shapeRing() {
+          const o = alloc();
+          const R = 1.35;
+          for (let i = 0; i < COUNT; i++) {
+            const u = Math.random();
+            if (u < 0.74) {
+              const th = rand(0, Math.PI * 2);
+              const streak = Math.pow(Math.random(), 2.2) * 0.85;
+              const tilt = rand(-0.5, 0.5);
+              const bx = Math.cos(th) * R,
+                by = Math.sin(th) * R;
+              const tx = -Math.sin(th),
+                ty = Math.cos(th);
+              const nx = Math.cos(th),
+                ny = Math.sin(th);
+              const mixv = rand(0.55, 1.0);
+              const x = bx + (tx * mixv + nx * (1 - mixv)) * streak + gauss() * 0.05;
+              const y = by + (ty * mixv + ny * (1 - mixv)) * streak + gauss() * 0.05;
+              const z = gauss() * 0.22 + Math.sin(th * 2) * 0.18 * tilt;
+              const c = Math.random();
+              if (c < 0.62) set(o, i, x, y, z, 0.85, 0.78, 0.66);
+              else if (c < 0.88) set(o, i, x, y, z, 0.85, 0.58, 0.3);
+              else set(o, i, x, y, z, 0.85, 0.28, 0.18);
+            } else if (u < 0.84) {
+              const r = Math.pow(Math.random(), 1.6) * 0.42;
+              const th = rand(0, Math.PI * 2);
+              set(o, i, Math.cos(th) * r, Math.sin(th) * r, gauss() * 0.12, 0.62, 0.7, 0.8);
+            } else {
+              set(o, i, gauss() * 2.8, gauss() * 2.4, gauss() * 1.6, 0.6, 0.5, 0.34);
+            }
+          }
+          return o;
+        }
 
-  function shapeNebula() {
-    const o = alloc();
-    const palette = [
-      [0.78, 0.32, 0.56], [0.24, 0.64, 0.78], [0.48, 0.32, 0.80],
-      [0.30, 0.76, 0.52], [0.30, 0.42, 0.80], [0.80, 0.54, 0.34],
-    ];
-    const centers = [];
-    for (let k = 0; k < 6; k++) {
-      centers.push({
-        x: rand(-1.7, 1.7), y: rand(-1.0, 1.0), z: rand(-0.8, 0.8),
-        s: rand(0.35, 0.7), c: palette[k],
-      });
-    }
-    for (let i = 0; i < COUNT; i++) {
-      if (Math.random() < 0.9) {
-        const c = centers[(Math.random() * centers.length) | 0];
-        const f = rand(0.55, 1.0);
-        set(o, i, c.x + gauss() * c.s, c.y + gauss() * c.s * 0.8, c.z + gauss() * c.s,
-          c.c[0] * f, c.c[1] * f, c.c[2] * f);
-      } else {
-        set(o, i, gauss() * 3.0, gauss() * 2.2, gauss() * 1.8, 0.5, 0.55, 0.7);
-      }
-    }
-    return o;
-  }
+        function shapeNebula() {
+          const o = alloc();
+          const palette = [
+            [0.78, 0.32, 0.56],
+            [0.24, 0.64, 0.78],
+            [0.48, 0.32, 0.8],
+            [0.3, 0.76, 0.52],
+            [0.3, 0.42, 0.8],
+            [0.8, 0.54, 0.34],
+          ];
+          const centers = [];
+          for (let k = 0; k < 6; k++) {
+            centers.push({
+              x: rand(-1.7, 1.7),
+              y: rand(-1.0, 1.0),
+              z: rand(-0.8, 0.8),
+              s: rand(0.35, 0.7),
+              c: palette[k],
+            });
+          }
+          for (let i = 0; i < COUNT; i++) {
+            if (Math.random() < 0.9) {
+              const c = centers[(Math.random() * centers.length) | 0];
+              const f = rand(0.55, 1.0);
+              set(
+                o,
+                i,
+                c.x + gauss() * c.s,
+                c.y + gauss() * c.s * 0.8,
+                c.z + gauss() * c.s,
+                c.c[0] * f,
+                c.c[1] * f,
+                c.c[2] * f
+              );
+            } else {
+              set(o, i, gauss() * 3.0, gauss() * 2.2, gauss() * 1.8, 0.5, 0.55, 0.7);
+            }
+          }
+          return o;
+        }
 
-  function shapeText(text) {
-    const o = alloc();
-    const cw = 900, ch = 240;
-    const c2 = document.createElement('canvas');
-    c2.width = cw; c2.height = ch;
-    const ctx = c2.getContext('2d');
-    ctx.fillStyle = '#fff';
-    ctx.font = '800 170px "Helvetica Neue", Arial, sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(text, cw / 2, ch / 2 + 6);
-    const data = ctx.getImageData(0, 0, cw, ch).data;
-    const pts = [];
-    for (let y = 0; y < ch; y += 2)
-      for (let x = 0; x < cw; x += 2)
-        if (data[(y * cw + x) * 4 + 3] > 128) pts.push([x, y]);
-    const SCALE = 3.8 / cw;
-    for (let i = 0; i < COUNT; i++) {
-      if (pts.length && Math.random() < 0.88) {
-        const p = pts[(Math.random() * pts.length) | 0];
-        const x = (p[0] - cw / 2) * SCALE + gauss() * 0.012;
-        const y = -(p[1] - ch / 2) * SCALE + gauss() * 0.012 + 1.1; /* テキストUIと重ならないよう上方へ */
-        const z = gauss() * 0.16 - 0.6;
-        const t = (y - 1.1 + 0.45) / 0.9;
-        set(o, i, x, y, z, 0.36 + 0.18 * (1 - t), 0.34 + 0.28 * t, 0.80);
-      } else {
-        set(o, i, gauss() * 2.8, gauss() * 2.0, gauss() * 1.6, 0.36, 0.40, 0.72);
-      }
-    }
-    return o;
-  }
+        function shapeText(text) {
+          const o = alloc();
+          const cw = 900,
+            ch = 240;
+          const c2 = document.createElement('canvas');
+          c2.width = cw;
+          c2.height = ch;
+          const ctx = c2.getContext('2d');
+          ctx.fillStyle = '#fff';
+          ctx.font = '800 170px "Helvetica Neue", Arial, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, cw / 2, ch / 2 + 6);
+          const data = ctx.getImageData(0, 0, cw, ch).data;
+          const pts = [];
+          for (let y = 0; y < ch; y += 2)
+            for (let x = 0; x < cw; x += 2) if (data[(y * cw + x) * 4 + 3] > 128) pts.push([x, y]);
+          const SCALE = 3.8 / cw;
+          for (let i = 0; i < COUNT; i++) {
+            if (pts.length && Math.random() < 0.88) {
+              const p = pts[(Math.random() * pts.length) | 0];
+              const x = (p[0] - cw / 2) * SCALE + gauss() * 0.012;
+              const y = -(p[1] - ch / 2) * SCALE + gauss() * 0.012 + 1.1; /* テキストUIと重ならないよう上方へ */
+              const z = gauss() * 0.16 - 0.6;
+              const t = (y - 1.1 + 0.45) / 0.9;
+              set(o, i, x, y, z, 0.36 + 0.18 * (1 - t), 0.34 + 0.28 * t, 0.8);
+            } else {
+              set(o, i, gauss() * 2.8, gauss() * 2.0, gauss() * 1.6, 0.36, 0.4, 0.72);
+            }
+          }
+          return o;
+        }
 
-  function shapeCanopy() {
-    const o = alloc();
-    for (let i = 0; i < COUNT; i++) {
-      const x0 = rand(-1.8, 1.8);
-      const topY = 1.25 - 0.18 * x0 * x0 + Math.sin(x0 * 3.1) * 0.12;
-      const u = Math.random();
-      if (u < 0.68) {
-        const y = topY - Math.pow(Math.random(), 2.4) * 0.55;
-        const glow = Math.max(0, 1 - (topY - y) * 1.6);
-        set(o, i, x0 + gauss() * 0.10, y, gauss() * 0.45,
-          (0.42 + 0.22 * glow) * 0.9, 0.62 + 0.16 * glow, 0.24 + 0.20 * (1 - glow));
-      } else if (u < 0.92) {
-        const drop = Math.pow(Math.random(), 1.4) * 2.4;
-        const fade = Math.max(0.22, 1 - drop * 0.45);
-        set(o, i, x0 + gauss() * 0.025, topY - 0.3 - drop, gauss() * 0.3,
-          0.32 * fade, 0.62 * fade, 0.55 * fade);
-      } else {
-        set(o, i, gauss() * 2.6, rand(-2.0, 1.5), gauss() * 1.5, 0.36, 0.6, 0.54);
-      }
-    }
-    return o;
-  }
+        function shapeCanopy() {
+          const o = alloc();
+          for (let i = 0; i < COUNT; i++) {
+            const x0 = rand(-1.8, 1.8);
+            const topY = 1.25 - 0.18 * x0 * x0 + Math.sin(x0 * 3.1) * 0.12;
+            const u = Math.random();
+            if (u < 0.68) {
+              const y = topY - Math.pow(Math.random(), 2.4) * 0.55;
+              const glow = Math.max(0, 1 - (topY - y) * 1.6);
+              set(
+                o,
+                i,
+                x0 + gauss() * 0.1,
+                y,
+                gauss() * 0.45,
+                (0.42 + 0.22 * glow) * 0.9,
+                0.62 + 0.16 * glow,
+                0.24 + 0.2 * (1 - glow)
+              );
+            } else if (u < 0.92) {
+              const drop = Math.pow(Math.random(), 1.4) * 2.4;
+              const fade = Math.max(0.22, 1 - drop * 0.45);
+              set(o, i, x0 + gauss() * 0.025, topY - 0.3 - drop, gauss() * 0.3, 0.32 * fade, 0.62 * fade, 0.55 * fade);
+            } else {
+              set(o, i, gauss() * 2.6, rand(-2.0, 1.5), gauss() * 1.5, 0.36, 0.6, 0.54);
+            }
+          }
+          return o;
+        }
 
-  function shapeSphere() {
-    const o = alloc();
-    const R = 0.95;
-    const GA = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < COUNT; i++) {
-      if (Math.random() < 0.86) {
-        const k = (Math.random() * COUNT) | 0;
-        const y = 1 - (k / (COUNT - 1)) * 2;
-        const rad = Math.sqrt(1 - y * y);
-        const th = GA * k;
-        const j = 1 + gauss() * 0.02;
-        const c = Math.random() < 0.93 ? [0.60, 0.66, 0.78] : [0.80, 0.62, 0.34];
-        set(o, i, Math.cos(th) * rad * R * j, y * R * j, Math.sin(th) * rad * R * j, c[0], c[1], c[2]);
-      } else {
-        const th = rand(0, Math.PI * 2);
-        const rr = rand(1.4, 2.6);
-        set(o, i, Math.cos(th) * rr, gauss() * 0.25, Math.sin(th) * rr, 0.42, 0.52, 0.72);
-      }
-    }
-    return o;
-  }
+        function shapeSphere() {
+          const o = alloc();
+          const R = 0.95;
+          const GA = Math.PI * (3 - Math.sqrt(5));
+          for (let i = 0; i < COUNT; i++) {
+            if (Math.random() < 0.86) {
+              const k = (Math.random() * COUNT) | 0;
+              const y = 1 - (k / (COUNT - 1)) * 2;
+              const rad = Math.sqrt(1 - y * y);
+              const th = GA * k;
+              const j = 1 + gauss() * 0.02;
+              const c = Math.random() < 0.93 ? [0.6, 0.66, 0.78] : [0.8, 0.62, 0.34];
+              set(o, i, Math.cos(th) * rad * R * j, y * R * j, Math.sin(th) * rad * R * j, c[0], c[1], c[2]);
+            } else {
+              const th = rand(0, Math.PI * 2);
+              const rr = rand(1.4, 2.6);
+              set(o, i, Math.cos(th) * rr, gauss() * 0.25, Math.sin(th) * rr, 0.42, 0.52, 0.72);
+            }
+          }
+          return o;
+        }
 
-  /* ============================================================
+        /* ============================================================
      パーティクル ジオメトリ + シェーダー
   ============================================================ */
-  const shapes = [shapeRing(), shapeNebula(), shapeText('WORKS'), shapeCanopy(), shapeSphere()];
+        const shapes = [shapeRing(), shapeNebula(), shapeText('WORKS'), shapeCanopy(), shapeSphere()];
 
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(shapes[0].pos, 3));
-  for (let s = 1; s <= 4; s++) geo.setAttribute('pos' + s, new THREE.BufferAttribute(shapes[s].pos, 3));
-  for (let s = 0; s <= 4; s++) geo.setAttribute('col' + s, new THREE.BufferAttribute(shapes[s].col, 3));
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute('position', new THREE.BufferAttribute(shapes[0].pos, 3));
+        for (let s = 1; s <= 4; s++) geo.setAttribute('pos' + s, new THREE.BufferAttribute(shapes[s].pos, 3));
+        for (let s = 0; s <= 4; s++) geo.setAttribute('col' + s, new THREE.BufferAttribute(shapes[s].col, 3));
 
-  const randAttr = new Float32Array(COUNT * 3);
-  for (let i = 0; i < COUNT; i++) {
-    randAttr[i * 3] = Math.random();
-    randAttr[i * 3 + 1] = rand(0.6, 1.9) * (Math.random() < 0.04 ? 2.2 : 1);
-    randAttr[i * 3 + 2] = Math.random();
-  }
-  geo.setAttribute('aRand', new THREE.BufferAttribute(randAttr, 3));
+        const randAttr = new Float32Array(COUNT * 3);
+        for (let i = 0; i < COUNT; i++) {
+          randAttr[i * 3] = Math.random();
+          randAttr[i * 3 + 1] = rand(0.6, 1.9) * (Math.random() < 0.04 ? 2.2 : 1);
+          randAttr[i * 3 + 2] = Math.random();
+        }
+        geo.setAttribute('aRand', new THREE.BufferAttribute(randAttr, 3));
 
-  const uniforms = {
-    uProgress:  { value: 0 },
-    uTime:      { value: 0 },
-    uRot:       { value: 0 },
-    uMouse:     { value: new THREE.Vector3(99, 99, 0) },
-    uMouseForce:{ value: isMobile ? 0 : 1 },
-    uMotion:    { value: reduceMotion ? 0.18 : 1 },
-    uPR:        { value: Math.min(devicePixelRatio, 1.5) },
-    uDim:       { value: 0.5 },   /* ★ 全体減光係数 — 明るさ調整はここ */
-  };
+        const uniforms = {
+          uProgress: { value: 0 },
+          uTime: { value: 0 },
+          uRot: { value: 0 },
+          uMouse: { value: new THREE.Vector3(99, 99, 0) },
+          uMouseForce: { value: isMobile ? 0 : 1 },
+          uMotion: { value: reduceMotion ? 0.18 : 1 },
+          uPR: { value: Math.min(devicePixelRatio, 1.5) },
+          uDim: { value: 0.5 } /* ★ 全体減光係数 — 明るさ調整はここ */,
+        };
 
-  const vert = `
+        const vert = `
     attribute vec3 pos1; attribute vec3 pos2; attribute vec3 pos3; attribute vec3 pos4;
     attribute vec3 col0; attribute vec3 col1; attribute vec3 col2; attribute vec3 col3; attribute vec3 col4;
     attribute vec3 aRand;
@@ -525,7 +817,7 @@
     }
   `;
 
-  const frag = `
+        const frag = `
     precision mediump float;
     uniform float uDim;
     varying vec3 vColor;
@@ -539,231 +831,284 @@
     }
   `;
 
-  const mat = new THREE.ShaderMaterial({
-    uniforms, vertexShader: vert, fragmentShader: frag,
-    transparent: true, depthWrite: false, depthTest: false,
-    blending: THREE.AdditiveBlending,
-  });
+        const mat = new THREE.ShaderMaterial({
+          uniforms,
+          vertexShader: vert,
+          fragmentShader: frag,
+          transparent: true,
+          depthWrite: false,
+          depthTest: false,
+          blending: THREE.AdditiveBlending,
+        });
 
-  const points = new THREE.Points(geo, mat);
-  points.frustumCulled = false;
-  points.renderOrder = 0;
-  scene.add(points);
+        const points = new THREE.Points(geo, mat);
+        points.frustumCulled = false;
+        points.renderOrder = 0;
+        scene.add(points);
 
-  /* ============================================================
+        /* ============================================================
      ★ ヘリックスカード — 中心軸を流線的に回転しながら
        スクロールと連動して上昇するカード群
   ============================================================ */
-  const CARD_DATA = [
-    { no: 'W-01', title: 'LOGISTICS\nRESERVATION', tag: 'SYSTEM / WEB',      smoke: ['#3a7bff', '#28e0c8', '#7a4dff'] },
-    { no: 'W-02', title: 'WAREHOUSE\nDASHBOARD',   tag: 'DATA VIZ / REACT',  smoke: ['#22d39a', '#1f8fff', '#b9ff5e'] },
-    { no: 'W-03', title: 'PARTICLE\nPORTFOLIO',    tag: 'WEBGL / THREE.JS',  smoke: ['#a04dff', '#ff4d9e', '#4dc8ff'] },
-    { no: 'W-04', title: 'INTERNAL\nTOOLING',      tag: '.NET / AUTOMATION', smoke: ['#ffb84d', '#ff5e5e', '#ffe08a'] },
-    { no: 'A-01', title: 'ABOUT YUKI',             tag: 'PROFILE',           smoke: ['#ff5fa8', '#ff9e5e', '#c44dff'] },
-    { no: 'C-01', title: "LET'S TALK",             tag: 'CONTACT',           smoke: ['#5ee0ff', '#4d7bff', '#b08aff'] },
-  ];
+        const CARD_DATA = [
+          {
+            no: 'W-01',
+            title: 'LOGISTICS\nRESERVATION',
+            tag: 'SYSTEM / WEB',
+            smoke: ['#3a7bff', '#28e0c8', '#7a4dff'],
+          },
+          {
+            no: 'W-02',
+            title: 'WAREHOUSE\nDASHBOARD',
+            tag: 'DATA VIZ / REACT',
+            smoke: ['#22d39a', '#1f8fff', '#b9ff5e'],
+          },
+          {
+            no: 'W-03',
+            title: 'PARTICLE\nPORTFOLIO',
+            tag: 'WEBGL / THREE.JS',
+            smoke: ['#a04dff', '#ff4d9e', '#4dc8ff'],
+          },
+          {
+            no: 'W-04',
+            title: 'INTERNAL\nTOOLING',
+            tag: '.NET / AUTOMATION',
+            smoke: ['#ffb84d', '#ff5e5e', '#ffe08a'],
+          },
+          { no: 'A-01', title: 'ABOUT YUKI', tag: 'PROFILE', smoke: ['#ff5fa8', '#ff9e5e', '#c44dff'] },
+          { no: 'C-01', title: "LET'S TALK", tag: 'CONTACT', smoke: ['#5ee0ff', '#4d7bff', '#b08aff'] },
+        ];
 
-  /* CanvasTexture — カラフルなスモーク質感のプロジェクトカード(参考動画準拠) */
-  function makeCardTexture(d) {
-    const w = 768, h = 480, r = 40;
-    const c = document.createElement('canvas');
-    c.width = w; c.height = h;
-    const x = c.getContext('2d');
+        /* CanvasTexture — カラフルなスモーク質感のプロジェクトカード(参考動画準拠) */
+        function makeCardTexture(d) {
+          const w = 768,
+            h = 480,
+            r = 40;
+          const c = document.createElement('canvas');
+          c.width = w;
+          c.height = h;
+          const x = c.getContext('2d');
 
-    const round = () => {
-      x.beginPath();
-      x.moveTo(r, 0); x.arcTo(w, 0, w, h, r); x.arcTo(w, h, 0, h, r);
-      x.arcTo(0, h, 0, 0, r); x.arcTo(0, 0, w, 0, r); x.closePath();
-    };
+          const round = () => {
+            x.beginPath();
+            x.moveTo(r, 0);
+            x.arcTo(w, 0, w, h, r);
+            x.arcTo(w, h, 0, h, r);
+            x.arcTo(0, h, 0, 0, r);
+            x.arcTo(0, 0, w, 0, r);
+            x.closePath();
+          };
 
-    // ベース
-    round(); x.fillStyle = 'rgba(10,12,22,0.94)'; x.fill();
-    x.save(); round(); x.clip();
+          // ベース
+          round();
+          x.fillStyle = 'rgba(10,12,22,0.94)';
+          x.fill();
+          x.save();
+          round();
+          x.clip();
 
-    // スモーク: カードごとのパレットでラジアルグラデーションを加算で重ねる
-    x.globalCompositeOperation = 'lighter';
-    for (let k = 0; k < 46; k++) {
-      const hx = rand(-60, w + 60), hy = rand(-60, h + 60);
-      const rr = rand(50, 230);
-      const col = d.smoke[(Math.random() * d.smoke.length) | 0];
-      const gr = x.createRadialGradient(hx, hy, 0, hx, hy, rr);
-      gr.addColorStop(0, col + Math.floor(rand(22, 58)).toString(16).padStart(2, '0'));
-      gr.addColorStop(1, col + '00');
-      x.fillStyle = gr;
-      x.beginPath(); x.arc(hx, hy, rr, 0, Math.PI * 2); x.fill();
-    }
-    // 粒状ノイズ
-    for (let k = 0; k < 1400; k++) {
-      x.fillStyle = 'rgba(255,255,255,' + rand(0.015, 0.07).toFixed(3) + ')';
-      x.fillRect(rand(0, w), rand(0, h), 1.4, 1.4);
-    }
-    x.globalCompositeOperation = 'source-over';
+          // スモーク: カードごとのパレットでラジアルグラデーションを加算で重ねる
+          x.globalCompositeOperation = 'lighter';
+          for (let k = 0; k < 46; k++) {
+            const hx = rand(-60, w + 60),
+              hy = rand(-60, h + 60);
+            const rr = rand(50, 230);
+            const col = d.smoke[(Math.random() * d.smoke.length) | 0];
+            const gr = x.createRadialGradient(hx, hy, 0, hx, hy, rr);
+            gr.addColorStop(0, col + Math.floor(rand(22, 58)).toString(16).padStart(2, '0'));
+            gr.addColorStop(1, col + '00');
+            x.fillStyle = gr;
+            x.beginPath();
+            x.arc(hx, hy, rr, 0, Math.PI * 2);
+            x.fill();
+          }
+          // 粒状ノイズ
+          for (let k = 0; k < 1400; k++) {
+            x.fillStyle = 'rgba(255,255,255,' + rand(0.015, 0.07).toFixed(3) + ')';
+            x.fillRect(rand(0, w), rand(0, h), 1.4, 1.4);
+          }
+          x.globalCompositeOperation = 'source-over';
 
-    // 中央をわずかに沈めてタイトルを立たせる
-    const vg = x.createRadialGradient(w / 2, h / 2, 40, w / 2, h / 2, 320);
-    vg.addColorStop(0, 'rgba(5,6,12,0.42)');
-    vg.addColorStop(1, 'rgba(5,6,12,0)');
-    x.fillStyle = vg; x.fillRect(0, 0, w, h);
-    x.restore();
+          // 中央をわずかに沈めてタイトルを立たせる
+          const vg = x.createRadialGradient(w / 2, h / 2, 40, w / 2, h / 2, 320);
+          vg.addColorStop(0, 'rgba(5,6,12,0.42)');
+          vg.addColorStop(1, 'rgba(5,6,12,0)');
+          x.fillStyle = vg;
+          x.fillRect(0, 0, w, h);
+          x.restore();
 
-    // 枠線
-    x.strokeStyle = 'rgba(238,241,247,0.30)';
-    x.lineWidth = 2; round(); x.stroke();
+          // 枠線
+          x.strokeStyle = 'rgba(238,241,247,0.30)';
+          x.lineWidth = 2;
+          round();
+          x.stroke();
 
-    // タイトル(中央・モノスペース・RGBずれの二重打ちでグリッチ風)
-    x.textAlign = 'center'; x.textBaseline = 'middle';
-    const lines = d.title.split('\n');
-    x.font = '700 54px "JetBrains Mono", Menlo, Consolas, monospace';
-    lines.forEach((line, i) => {
-      const ly = h / 2 + (i - (lines.length - 1) / 2) * 64;
-      x.fillStyle = 'rgba(120,220,255,0.5)';
-      x.fillText(line, w / 2 + 3, ly + 2);
-      x.fillStyle = 'rgba(255,120,200,0.4)';
-      x.fillText(line, w / 2 - 3, ly - 1);
-      x.fillStyle = 'rgba(240,246,255,0.96)';
-      x.fillText(line, w / 2, ly);
-    });
+          // タイトル(中央・モノスペース・RGBずれの二重打ちでグリッチ風)
+          x.textAlign = 'center';
+          x.textBaseline = 'middle';
+          const lines = d.title.split('\n');
+          x.font = '700 54px "JetBrains Mono", Menlo, Consolas, monospace';
+          lines.forEach((line, i) => {
+            const ly = h / 2 + (i - (lines.length - 1) / 2) * 64;
+            x.fillStyle = 'rgba(120,220,255,0.5)';
+            x.fillText(line, w / 2 + 3, ly + 2);
+            x.fillStyle = 'rgba(255,120,200,0.4)';
+            x.fillText(line, w / 2 - 3, ly - 1);
+            x.fillStyle = 'rgba(240,246,255,0.96)';
+            x.fillText(line, w / 2, ly);
+          });
 
-    // 四隅のメタ情報
-    x.textAlign = 'left'; x.textBaseline = 'alphabetic';
-    x.fillStyle = 'rgba(238,241,247,0.55)';
-    x.font = '500 20px "JetBrains Mono", Menlo, monospace';
-    x.fillText(d.no, 34, 48);
-    x.textAlign = 'right';
-    x.fillText(d.tag, w - 34, h - 34);
-    x.textAlign = 'left';
+          // 四隅のメタ情報
+          x.textAlign = 'left';
+          x.textBaseline = 'alphabetic';
+          x.fillStyle = 'rgba(238,241,247,0.55)';
+          x.font = '500 20px "JetBrains Mono", Menlo, monospace';
+          x.fillText(d.no, 34, 48);
+          x.textAlign = 'right';
+          x.fillText(d.tag, w - 34, h - 34);
+          x.textAlign = 'left';
 
-    const tex = new THREE.CanvasTexture(c);
-    tex.anisotropy = 4;
-    return tex;
-  }
+          const tex = new THREE.CanvasTexture(c);
+          tex.anisotropy = 4;
+          return tex;
+        }
 
-  const cardGroup = new THREE.Group();
-  scene.add(cardGroup);
+        const cardGroup = new THREE.Group();
+        scene.add(cardGroup);
 
-  /* 螺旋階段パラメータ */
-  const AXIS_X = 0.55;   // 回転軸のX位置(画面のやや右)
-  const CARD_R = 1.35;   // 軸からの半径
-  const STEP_A = 1.85;   // 1段あたりの角度差(rad)
-  const STEP_Y = 1.05;   // 1段あたりの高さ差
-  const TURN_K = 2.1;    // スクロール→段数の係数(登る速さ)
-  const N_CARDS = CARD_DATA.length;
-  cardGroup.position.x = AXIS_X;
+        /* 螺旋階段パラメータ */
+        const AXIS_X = 0.55; // 回転軸のX位置(画面のやや右)
+        const CARD_R = 1.35; // 軸からの半径
+        const STEP_A = 1.85; // 1段あたりの角度差(rad)
+        const STEP_Y = 1.05; // 1段あたりの高さ差
+        const TURN_K = 2.1; // スクロール→段数の係数(登る速さ)
+        const N_CARDS = CARD_DATA.length;
+        cardGroup.position.x = AXIS_X;
 
-  const cards = CARD_DATA.map((d, i) => {
-    const mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.4, 1.5),
-      new THREE.MeshBasicMaterial({
-        map: makeCardTexture(d),
-        transparent: true,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-      })
-    );
-    mesh.renderOrder = 2;
-    cardGroup.add(mesh);
-    return { mesh, i };
-  });
+        const cards = CARD_DATA.map((d, i) => {
+          const mesh = new THREE.Mesh(
+            new THREE.PlaneGeometry(2.4, 1.5),
+            new THREE.MeshBasicMaterial({
+              map: makeCardTexture(d),
+              transparent: true,
+              depthWrite: false,
+              side: THREE.DoubleSide,
+            })
+          );
+          mesh.renderOrder = 2;
+          cardGroup.add(mesh);
+          return { mesh, i };
+        });
 
-  /* スクロールに応じてヘリックス上の位置を更新 */
-  function updateCards(smooth, t) {
-    // ヒーローと終盤はカードをフェードアウト
-    const groupFade =
-      Math.min(1, Math.max(0, (smooth - 0.45) * 2.2)) *
-      Math.min(1, Math.max(0, (3.75 - smooth) * 2.2));
+        /* スクロールに応じてヘリックス上の位置を更新 */
+        function updateCards(smooth, t) {
+          // ヒーローと終盤はカードをフェードアウト
+          const groupFade =
+            Math.min(1, Math.max(0, (smooth - 0.45) * 2.2)) * Math.min(1, Math.max(0, (3.75 - smooth) * 2.2));
 
-    for (const c of cards) {
-      // u = 段位置。0 のとき正面・目線の高さ。スクロールで階段を登る
-      // (uが減る = カードが下へ流れる = カメラが登っていく感覚)
-      let u = c.i - (smooth - 0.9) * TURN_K;
-      u = ((u % N_CARDS) + N_CARDS) % N_CARDS;
-      if (u > N_CARDS / 2) u -= N_CARDS; // -N/2 .. N/2 にラップ
+          for (const c of cards) {
+            // u = 段位置。0 のとき正面・目線の高さ。スクロールで階段を登る
+            // (uが減る = カードが下へ流れる = カメラが登っていく感覚)
+            let u = c.i - (smooth - 0.9) * TURN_K;
+            u = ((u % N_CARDS) + N_CARDS) % N_CARDS;
+            if (u > N_CARDS / 2) u -= N_CARDS; // -N/2 .. N/2 にラップ
 
-      // 螺旋階段: 段位置に比例して角度と高さが決まる
-      const th = Math.PI / 2 + u * STEP_A + (reduceMotion ? 0 : Math.sin(t * 0.2) * 0.03);
-      const y = u * STEP_Y;
+            // 螺旋階段: 段位置に比例して角度と高さが決まる
+            const th = Math.PI / 2 + u * STEP_A + (reduceMotion ? 0 : Math.sin(t * 0.2) * 0.03);
+            const y = u * STEP_Y;
 
-      c.mesh.position.set(
-        Math.cos(th) * CARD_R,
-        y + Math.sin(t * 0.7 + c.i * 2.1) * 0.035 * (reduceMotion ? 0 : 1),
-        Math.sin(th) * CARD_R
-      );
+            c.mesh.position.set(
+              Math.cos(th) * CARD_R,
+              y + Math.sin(t * 0.7 + c.i * 2.1) * 0.035 * (reduceMotion ? 0 : 1),
+              Math.sin(th) * CARD_R
+            );
 
-      // 正面(u=0)で真っ直ぐカメラを向き、前後の段は投げ出されたように傾く
-      c.mesh.rotation.set(-0.05 + u * 0.16, Math.PI / 2 - th, u * 0.07);
+            // 正面(u=0)で真っ直ぐカメラを向き、前後の段は投げ出されたように傾く
+            c.mesh.rotation.set(-0.05 + u * 0.16, Math.PI / 2 - th, u * 0.07);
 
-      // 正面を向いた瞬間が主役: スケールと不透明度を山なりに
-      const facing = Math.max(0, Math.sin(th));
-      const s = 0.85 + 0.3 * facing;
-      c.mesh.scale.set(s, s, 1);
+            // 正面を向いた瞬間が主役: スケールと不透明度を山なりに
+            const facing = Math.max(0, Math.sin(th));
+            const s = 0.85 + 0.3 * facing;
+            c.mesh.scale.set(s, s, 1);
 
-      const edgeFade = Math.max(0, 1 - Math.pow(Math.abs(u) / (N_CARDS / 2 - 0.15), 4));
-      c.mesh.material.opacity = (0.22 + 0.78 * Math.pow(facing, 1.4)) * edgeFade * groupFade;
-      c.mesh.visible = c.mesh.material.opacity > 0.01;
-    }
-    return groupFade;
-  }
+            const edgeFade = Math.max(0, 1 - Math.pow(Math.abs(u) / (N_CARDS / 2 - 0.15), 4));
+            c.mesh.material.opacity = (0.22 + 0.78 * Math.pow(facing, 1.4)) * edgeFade * groupFade;
+            c.mesh.visible = c.mesh.material.opacity > 0.01;
+          }
+          return groupFade;
+        }
 
-  /* ============================================================
+        /* ============================================================
      ★ 中心スパイン — 螺旋階段の軸となる破片の柱
      花弁状のパーティクルクラスタが縦に連なり、
      スクロールで下方向へ流れる(= カメラが階段を登る感覚)。
      カード表示中のみフェードイン (uFade)。
   ============================================================ */
-  const S_COUNT = isMobile ? 1500 : 4200;
-  const S_H = 10.0;
-  const sGeo = new THREE.BufferGeometry();
-  {
-    const sp = new Float32Array(S_COUNT * 3);
-    const sc = new Float32Array(S_COUNT * 3);
-    const sr = new Float32Array(S_COUNT);
-    const SPALETTE = [
-      [0.85, 0.55, 0.75], [0.75, 0.65, 0.90], [0.90, 0.85, 0.95],
-      [0.55, 0.75, 0.90], [0.90, 0.60, 0.50],
-    ];
-    const clusters = [];
-    for (let k = 0; k < 14; k++) {
-      clusters.push({
-        y: (k / 14) * S_H - S_H / 2 + rand(-0.2, 0.2),
-        a: rand(0, Math.PI * 2),
-        c: SPALETTE[(Math.random() * SPALETTE.length) | 0],
-      });
-    }
-    for (let i = 0; i < S_COUNT; i++) {
-      let xP, yP, zP, col;
-      if (Math.random() < 0.8) {
-        // 花弁状クラスタ: 中心から5方向に放射する粒の束
-        const cl = clusters[(Math.random() * clusters.length) | 0];
-        const ang = cl.a + (((Math.random() * 5) | 0) / 5) * Math.PI * 2 + gauss() * 0.25;
-        const rr = Math.pow(Math.random(), 0.7) * 0.4;
-        xP = Math.cos(ang) * rr + gauss() * 0.04;
-        zP = Math.sin(ang) * rr + gauss() * 0.04;
-        yP = cl.y + gauss() * 0.18;
-        const f = rand(0.6, 1.0);
-        col = [cl.c[0] * f, cl.c[1] * f, cl.c[2] * f];
-      } else {
-        // 柱に沿って漂う塵
-        const ang = rand(0, Math.PI * 2);
-        const rr = Math.pow(Math.random(), 2.0) * 0.6;
-        xP = Math.cos(ang) * rr; zP = Math.sin(ang) * rr;
-        yP = rand(-S_H / 2, S_H / 2);
-        col = [0.6, 0.6, 0.75];
-      }
-      sp[i * 3] = xP; sp[i * 3 + 1] = yP; sp[i * 3 + 2] = zP;
-      sc[i * 3] = col[0]; sc[i * 3 + 1] = col[1]; sc[i * 3 + 2] = col[2];
-      sr[i] = rand(0.5, 1.6);
-    }
-    sGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
-    sGeo.setAttribute('aCol', new THREE.BufferAttribute(sc, 3));
-    sGeo.setAttribute('aSize', new THREE.BufferAttribute(sr, 1));
-  }
-  const sUniforms = {
-    uTime: { value: 0 }, uRot: { value: 0 }, uLift: { value: 0 },
-    uFade: { value: 0 }, uPR: { value: Math.min(devicePixelRatio, 1.5) },
-  };
-  const spineMat = new THREE.ShaderMaterial({
-    uniforms: sUniforms,
-    vertexShader: `
+        const S_COUNT = isMobile ? 1500 : 4200;
+        const S_H = 10.0;
+        const sGeo = new THREE.BufferGeometry();
+        {
+          const sp = new Float32Array(S_COUNT * 3);
+          const sc = new Float32Array(S_COUNT * 3);
+          const sr = new Float32Array(S_COUNT);
+          const SPALETTE = [
+            [0.85, 0.55, 0.75],
+            [0.75, 0.65, 0.9],
+            [0.9, 0.85, 0.95],
+            [0.55, 0.75, 0.9],
+            [0.9, 0.6, 0.5],
+          ];
+          const clusters = [];
+          for (let k = 0; k < 14; k++) {
+            clusters.push({
+              y: (k / 14) * S_H - S_H / 2 + rand(-0.2, 0.2),
+              a: rand(0, Math.PI * 2),
+              c: SPALETTE[(Math.random() * SPALETTE.length) | 0],
+            });
+          }
+          for (let i = 0; i < S_COUNT; i++) {
+            let xP, yP, zP, col;
+            if (Math.random() < 0.8) {
+              // 花弁状クラスタ: 中心から5方向に放射する粒の束
+              const cl = clusters[(Math.random() * clusters.length) | 0];
+              const ang = cl.a + (((Math.random() * 5) | 0) / 5) * Math.PI * 2 + gauss() * 0.25;
+              const rr = Math.pow(Math.random(), 0.7) * 0.4;
+              xP = Math.cos(ang) * rr + gauss() * 0.04;
+              zP = Math.sin(ang) * rr + gauss() * 0.04;
+              yP = cl.y + gauss() * 0.18;
+              const f = rand(0.6, 1.0);
+              col = [cl.c[0] * f, cl.c[1] * f, cl.c[2] * f];
+            } else {
+              // 柱に沿って漂う塵
+              const ang = rand(0, Math.PI * 2);
+              const rr = Math.pow(Math.random(), 2.0) * 0.6;
+              xP = Math.cos(ang) * rr;
+              zP = Math.sin(ang) * rr;
+              yP = rand(-S_H / 2, S_H / 2);
+              col = [0.6, 0.6, 0.75];
+            }
+            sp[i * 3] = xP;
+            sp[i * 3 + 1] = yP;
+            sp[i * 3 + 2] = zP;
+            sc[i * 3] = col[0];
+            sc[i * 3 + 1] = col[1];
+            sc[i * 3 + 2] = col[2];
+            sr[i] = rand(0.5, 1.6);
+          }
+          sGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+          sGeo.setAttribute('aCol', new THREE.BufferAttribute(sc, 3));
+          sGeo.setAttribute('aSize', new THREE.BufferAttribute(sr, 1));
+        }
+        const sUniforms = {
+          uTime: { value: 0 },
+          uRot: { value: 0 },
+          uLift: { value: 0 },
+          uFade: { value: 0 },
+          uPR: { value: Math.min(devicePixelRatio, 1.5) },
+        };
+        const spineMat = new THREE.ShaderMaterial({
+          uniforms: sUniforms,
+          vertexShader: `
       attribute vec3 aCol;
       attribute float aSize;
       uniform float uTime, uRot, uLift, uPR;
@@ -782,7 +1127,7 @@
         gl_PointSize = aSize * uPR * (120.0 / -mv.z);
       }
     `,
-    fragmentShader: `
+          fragmentShader: `
       precision mediump float;
       uniform float uFade;
       varying vec3 vC; varying float vA;
@@ -794,124 +1139,132 @@
         gl_FragColor = vec4(vC, a * vA * 0.4 * uFade);
       }
     `,
-    transparent: true, depthWrite: false, depthTest: false,
-    blending: THREE.AdditiveBlending,
-  });
-  const spine = new THREE.Points(sGeo, spineMat);
-  spine.frustumCulled = false;
-  spine.renderOrder = 1;
-  spine.position.x = AXIS_X;
-  scene.add(spine);
+          transparent: true,
+          depthWrite: false,
+          depthTest: false,
+          blending: THREE.AdditiveBlending,
+        });
+        const spine = new THREE.Points(sGeo, spineMat);
+        spine.frustumCulled = false;
+        spine.renderOrder = 1;
+        spine.position.x = AXIS_X;
+        scene.add(spine);
 
-  /* ============================================================
+        /* ============================================================
      スクロール → 進行度
   ============================================================ */
-  let targetProgress = 0;
-  let smooth = 0;
+        let targetProgress = 0;
+        let smooth = 0;
 
-  const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
-  const onScroll = () => { targetProgress = (scrollY / Math.max(1, maxScroll())) * SEGMENTS; };
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+        const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
+        const onScroll = () => {
+          targetProgress = (scrollY / Math.max(1, maxScroll())) * SEGMENTS;
+        };
+        addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
 
-  document.querySelectorAll('[data-go]').forEach(el => {
-    el.addEventListener('click', () => {
-      const i = +el.dataset.go;
-      scrollTo({ top: (i / SEGMENTS) * maxScroll(), behavior: reduceMotion ? 'auto' : 'smooth' });
-    });
-  });
+        document.querySelectorAll('[data-go]').forEach((el) => {
+          el.addEventListener('click', () => {
+            const i = +el.dataset.go;
+            scrollTo({ top: (i / SEGMENTS) * maxScroll(), behavior: reduceMotion ? 'auto' : 'smooth' });
+          });
+        });
 
-  /* ============================================================
+        /* ============================================================
      マウス
   ============================================================ */
-  const ray = new THREE.Raycaster();
-  const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-  const ndc = new THREE.Vector2(99, 99);
-  const hit = new THREE.Vector3();
-  let mouseActive = false;
+        const ray = new THREE.Raycaster();
+        const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+        const ndc = new THREE.Vector2(99, 99);
+        const hit = new THREE.Vector3();
+        let mouseActive = false;
 
-  if (!isMobile) {
-    addEventListener('pointermove', e => {
-      ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
-      mouseActive = true;
-    }, { passive: true });
-  }
+        if (!isMobile) {
+          addEventListener(
+            'pointermove',
+            (e) => {
+              ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+              mouseActive = true;
+            },
+            { passive: true }
+          );
+        }
 
-  /* ============================================================
+        /* ============================================================
      レンダーループ
   ============================================================ */
-  const panels = [...document.querySelectorAll('.panel')];
-  const railBtns = [...document.querySelectorAll('.rail button')];
-  const cNow = document.getElementById('cNow');
-  let lastIdx = -1;
+        const panels = [...document.querySelectorAll('.panel')];
+        const railBtns = [...document.querySelectorAll('.rail button')];
+        const cNow = document.getElementById('cNow');
+        let lastIdx = -1;
 
-  const clock = new THREE.Clock();
-  const bgColor = new THREE.Color();
+        const clock = new THREE.Clock();
+        const bgColor = new THREE.Color();
 
-  function tick() {
-    const t = clock.getElapsedTime();
-    smooth += (targetProgress - smooth) * 0.065;
+        function tick() {
+          const t = clock.getElapsedTime();
+          smooth += (targetProgress - smooth) * 0.065;
 
-    uniforms.uTime.value = t;
-    uniforms.uProgress.value = smooth;
-    uniforms.uRot.value = smooth * 0.9 + (reduceMotion ? 0 : t * 0.03);
+          uniforms.uTime.value = t;
+          uniforms.uProgress.value = smooth;
+          uniforms.uRot.value = smooth * 0.9 + (reduceMotion ? 0 : t * 0.03);
 
-    if (!isMobile && mouseActive) {
-      ray.setFromCamera(ndc, camera);
-      ray.ray.intersectPlane(planeZ, hit);
-      uniforms.uMouse.value.lerp(hit, 0.18);
-      camera.position.x += (ndc.x * 0.3 - camera.position.x) * 0.04;
-      camera.position.y += (0.2 + ndc.y * 0.22 - camera.position.y) * 0.04;
-      camera.lookAt(0, 0, 0);
-    }
+          if (!isMobile && mouseActive) {
+            ray.setFromCamera(ndc, camera);
+            ray.ray.intersectPlane(planeZ, hit);
+            uniforms.uMouse.value.lerp(hit, 0.18);
+            camera.position.x += (ndc.x * 0.3 - camera.position.x) * 0.04;
+            camera.position.y += (0.2 + ndc.y * 0.22 - camera.position.y) * 0.04;
+            camera.lookAt(0, 0, 0);
+          }
 
-    const showcase = updateCards(smooth, t);
+          const showcase = updateCards(smooth, t);
 
-    // スパイン: カードと同じ速度で下方向へ流れる(カメラが登る感覚)
-    sUniforms.uTime.value = t;
-    sUniforms.uRot.value = uniforms.uRot.value * 0.6;
-    sUniforms.uLift.value = -smooth * TURN_K * STEP_Y + t * 0.05;
-    sUniforms.uFade.value = showcase;
+          // スパイン: カードと同じ速度で下方向へ流れる(カメラが登る感覚)
+          sUniforms.uTime.value = t;
+          sUniforms.uRot.value = uniforms.uRot.value * 0.6;
+          sUniforms.uLift.value = -smooth * TURN_K * STEP_Y + t * 0.05;
+          sUniforms.uFade.value = showcase;
 
-    // カード前面表示中は背景パーティクルを沈めて主役を立たせる
-    uniforms.uDim.value = 0.5 * (1 - 0.45 * showcase);
+          // カード前面表示中は背景パーティクルを沈めて主役を立たせる
+          uniforms.uDim.value = 0.5 * (1 - 0.45 * showcase);
 
+          const bi = Math.min(SEGMENTS - 0.001, Math.max(0, smooth));
+          const b0 = Math.floor(bi),
+            bf = bi - b0;
+          bgColor.copy(BG[b0]).lerp(BG[b0 + 1], bf);
+          renderer.setClearColor(bgColor);
 
-    const bi = Math.min(SEGMENTS - 0.001, Math.max(0, smooth));
-    const b0 = Math.floor(bi), bf = bi - b0;
-    bgColor.copy(BG[b0]).lerp(BG[b0 + 1], bf);
-    renderer.setClearColor(bgColor);
+          for (let i = 0; i < panels.length; i++) {
+            const dist = Math.abs(smooth - i);
+            const o = Math.max(0, 1 - dist * 1.9);
+            panels[i].style.opacity = o.toFixed(3);
+            panels[i].style.transform = `translateY(${(smooth - i) * -36}px)`;
+            const live = o > 0.45;
+            panels[i].classList.toggle('live', live);
+            panels[i].querySelectorAll('a').forEach((a) => (a.tabIndex = live ? 0 : -1));
+          }
 
-    for (let i = 0; i < panels.length; i++) {
-      const dist = Math.abs(smooth - i);
-      const o = Math.max(0, 1 - dist * 1.9);
-      panels[i].style.opacity = o.toFixed(3);
-      panels[i].style.transform = `translateY(${(smooth - i) * -36}px)`;
-      const live = o > 0.45;
-      panels[i].classList.toggle('live', live);
-      panels[i].querySelectorAll('a').forEach(a => a.tabIndex = live ? 0 : -1);
-    }
+          const idx = Math.round(Math.min(SEGMENTS, Math.max(0, smooth)));
+          if (idx !== lastIdx) {
+            lastIdx = idx;
+            railBtns.forEach((b, i) => b.classList.toggle('on', i === idx));
+            cNow.textContent = '0' + (idx + 1);
+          }
 
-    const idx = Math.round(Math.min(SEGMENTS, Math.max(0, smooth)));
-    if (idx !== lastIdx) {
-      lastIdx = idx;
-      railBtns.forEach((b, i) => b.classList.toggle('on', i === idx));
-      cNow.textContent = '0' + (idx + 1);
-    }
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+        }
+        tick();
 
-    renderer.render(scene, camera);
-    requestAnimationFrame(tick);
-  }
-  tick();
-
-  addEventListener('resize', () => {
-    camera.aspect = innerWidth / innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(innerWidth, innerHeight);
-    uniforms.uPR.value = Math.min(devicePixelRatio, 1.5);
-    sUniforms.uPR.value = Math.min(devicePixelRatio, 1.5);
-  });
-})();
-</script>
-</body>
+        addEventListener('resize', () => {
+          camera.aspect = innerWidth / innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(innerWidth, innerHeight);
+          uniforms.uPR.value = Math.min(devicePixelRatio, 1.5);
+          sUniforms.uPR.value = Math.min(devicePixelRatio, 1.5);
+        });
+      })();
+    </script>
+  </body>
 </html>

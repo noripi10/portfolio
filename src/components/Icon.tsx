@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-
 import { SvgProps } from 'react-native-svg';
 
+// @ts-expect-error
 const svgIcons = require.context('../../assets/svg', true, /\.*/, 'sync');
 
 export type IconName = 'blog' | 'expo' | 'github' | 'mail' | 'project' | 'x';

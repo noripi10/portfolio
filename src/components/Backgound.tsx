@@ -1,6 +1,5 @@
+import { useTheme } from 'expo-router/react-navigation';
 import { StyleSheet, View } from 'react-native';
-
-import { useTheme } from "expo-router/react-navigation";
 
 export const Backgound = () => {
   const theme = useTheme();

@@ -1,11 +1,18 @@
-import { Slot } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { Slot, usePathname } from 'expo-router';
+import { Platform, StyleSheet, View } from 'react-native';
 
+import { Backgound } from '@/components/Backgound';
 import { MobileHeader } from '@/components/Header';
 import { SideBar } from '@/components/SideBar';
-import { Backgound } from '@/components/Backgound';
 
 export default function MainLayout() {
+  const pathname = usePathname();
+
+  // ホーム(particle portfolio)は専用のヘッダー/ナビを持つため、共通の Sidebar/Header は表示しない
+  if (Platform.OS === 'web' && pathname === '/') {
+    return <Slot />;
+  }
+
   return (
     <>
       <Backgound />

@@ -1,6 +1,6 @@
+import { DarkTheme, DefaultTheme } from 'expo-router';
+import { Theme } from 'expo-router/react-navigation';
 import React, { Dispatch, useContext } from 'react';
-import { Theme } from "expo-router/react-navigation";
-import { DarkTheme, DefaultTheme } from "expo-router";
 import { useLocalStorage } from 'react-use';
 
 const customDarkTheme: Theme = {

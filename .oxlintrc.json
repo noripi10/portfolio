@@ -1,9 +1,26 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "react-perf", "typescript", "unicorn", "oxc"],
   "categories": {
-    "correctness": "warn"
+    "correctness": "error",
+    "suspicious": "warn"
   },
   "rules": {
-    "eslint/no-unused-vars": "error"
+    "eslint/no-unused-vars": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "typescript/no-explicit-any": "warn",
+    "sort-imports": [
+      "error",
+      {
+        "ignoreDeclarationSort": true
+      }
+    ]
+  },
+  "env": {
+    "browser": true,
+    "builtin": true,
+    "es2020": true
   }
 }

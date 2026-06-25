@@ -1,7 +1,32 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "printWidth": 120,
-  "jsxSingleQuote": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
   "singleQuote": true,
-  "trailingComma": "es5"
+  "jsxSingleQuote": true,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "ignorePatterns": ["dist", "node_modules"],
+  "sortImports": {
+    "customGroups": [
+      {
+        "groupName": "public-assets",
+        "elementNamePattern": ["/**", "/*"]
+      }
+    ],
+    "groups": [
+      ["value-builtin", "value-external"],
+      ["value-internal"],
+      ["value-parent", "value-sibling", "value-index"],
+      ["public-assets"],
+      ["type-builtin", "type-external"],
+      ["type-internal"],
+      ["type-parent", "type-sibling", "type-index"],
+      ["unknown"]
+    ],
+    "newlinesBetween": true
+  }
 }

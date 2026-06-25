@@ -1,6 +1,5 @@
+import { useTheme } from 'expo-router/react-navigation';
 import { Text, TextProps } from 'react-native';
-
-import { useTheme } from "expo-router/react-navigation";
 
 export const NativeText = ({ style, ...props }: TextProps) => {
   const theme = useTheme();

@@ -1,7 +1,6 @@
+import { Image } from 'expo-image';
 import { useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
-
-import { Image } from 'expo-image';
 
 import { useWidth } from '@/hooks/useWidth';
 
@@ -16,8 +15,8 @@ export const MainVisual = () => {
     if (!element) return;
 
     const handler = () => {
-      const _rect = element.getBoundingClientRect();
-      setRect(_rect);
+      const boundingRect = element.getBoundingClientRect();
+      setRect(boundingRect);
     };
 
     window.addEventListener('resize', handler);

@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import Parser from 'rss-parser';
+
 import dayjs from '../libs/day';
 
 const parser = new Parser();
@@ -26,12 +27,12 @@ const parse = async () => {
   return items;
 };
 
-parse().then(async (rss) => {
+void parse().then(async (rss) => {
   try {
     await fs.rm('./src/constants/rss', { recursive: true, force: true });
     await fs.mkdir('./src/constants/rss');
     const json = JSON.stringify(rss, null, 2);
-    fs.writeFile('./src/constants/rss/rss.json', json);
+    await fs.writeFile('./src/constants/rss/rss.json', json);
   } catch (error) {
     console.error('[Error] rss file create');
     console.error(error);

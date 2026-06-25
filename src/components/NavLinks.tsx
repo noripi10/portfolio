@@ -1,7 +1,6 @@
-import { StyleSheet, View } from 'react-native';
-
-import { useTheme } from "expo-router/react-navigation";
 import { Link } from 'expo-router';
+import { useTheme } from 'expo-router/react-navigation';
+import { StyleSheet, View } from 'react-native';
 
 import { Icon, IconName } from './Icon';
 import { NativeText } from './Text';

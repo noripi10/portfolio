@@ -1,12 +1,12 @@
 :root {
-  --cube-size: 40px;
+  --cube-size: 60px;
   --cube-face-z: calc(var(--cube-size) / 2);
   --cube-face-border: 1px solid #dddddd44;
   --cube-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
   --cube-img-opacity: 0.8;
   --cube-img-shadow: 0 0 8px #0003;
   --cube-perspective: 1200px;
-  --cube-container-size: 40px;
+  --cube-container-size: 60px;
   --cube-animation-duration: 10s;
 }
 

@@ -1,14 +1,12 @@
-import { StyleSheet, View } from 'react-native';
-
-import { useTheme } from "expo-router/react-navigation";
-
 import Github from '@assets/svg/github.svg';
 import Email from '@assets/svg/mail.svg';
 import X from '@assets/svg/x.svg';
+import { useTheme } from 'expo-router/react-navigation';
+import { StyleSheet, View } from 'react-native';
 
+import { Cube } from './cube/Cube';
 import { ExternalLink } from './ExternalLink';
 import { NativeText } from './Text';
-import { Cube } from './Cube';
 
 export const Footer = () => {
   const color = useTheme().colors.text;
