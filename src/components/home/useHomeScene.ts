@@ -354,6 +354,16 @@ export function useHomeScene(
     scrollEl.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
+    // macOS Chrome/Safari では position:fixed な overflow コンテナに
+    // トラックパッドのホイールイベントが届かないため手動でルーティングする
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) >= Math.abs(e.deltaX)) {
+        e.preventDefault();
+        scrollEl.scrollTop = Math.max(0, Math.min(maxScroll(), scrollEl.scrollTop + e.deltaY));
+      }
+    };
+    window.addEventListener('wheel', onWheel, { passive: false });
+
     goToRef.current = (i: number) => {
       scrollEl.scrollTo({ top: (i / SEGMENTS) * maxScroll(), behavior: reduceMotion ? 'auto' : 'smooth' });
     };
@@ -456,6 +466,7 @@ export function useHomeScene(
       disposed = true;
       cancelAnimationFrame(rafId);
       scrollEl.removeEventListener('scroll', onScroll);
+      window.removeEventListener('wheel', onWheel);
       removeEventListener('resize', onResize);
       if (!isMobile) removeEventListener('pointermove', onPointerMove);
 
