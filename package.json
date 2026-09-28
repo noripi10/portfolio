@@ -70,6 +70,6 @@
     "*.{js,jsx,ts,tsx,mjs,cjs}": "bun lint"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   }
 }
