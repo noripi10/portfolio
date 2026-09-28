@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Image } from 'expo-image';
@@ -7,57 +7,61 @@ import { useWidth } from '@/hooks/useWidth';
 
 export const MainVisual = () => {
   const { width } = useWidth();
-
   const ref = useRef<HTMLDivElement>(null);
-  const [rect, setRect] = useState<DOMRect>();
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
-    const handler = () => {
-      const _rect = element.getBoundingClientRect();
-      setRect(_rect);
+    let rect: DOMRect | undefined = undefined;
+
+    const mouseEnterHandler = () => {
+      element.style.transform = '';
+      rect = element.getBoundingClientRect();
+      element.style.willChange = 'transform';
     };
 
-    window.addEventListener('resize', handler);
-
-    handler();
-    return () => {
-      window.removeEventListener('resize', handler);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const handler = (e: globalThis.MouseEvent) => {
-      if (!rect || !ref.current) return;
-
-      const startX = rect.x;
-      const endX = rect.x + rect.width;
-      const startY = rect.y;
-      const endY = rect.y + rect.height;
+    const mouseMoveHandler = (e: MouseEvent) => {
+      if (!rect) {
+        rect = element.getBoundingClientRect();
+      }
 
       const clientX = e.clientX;
       const clientY = e.clientY;
-
-      const centerX = startX + (endX - startX) / 2;
-      const centerY = startY + (endY - startY) / 2;
-
+      const centerX = rect.x + rect.width / 2;
+      const centerY = rect.y + rect.height / 2;
+      const endX = rect.x + rect.width;
+      const endY = rect.y + rect.height;
       const rotateX = -((centerY - clientY) / (endY - centerY)) * 10;
       const rotateY = ((centerX - clientX) / (endX - centerX)) * 10;
 
-      ref.current.style.cssText = `will-change: transform; transform: perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05); margin: auto;`;
+      element.style.transition = 'transform 0.1s ease-in';
+      element.style.transform = `perspective(500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
     };
 
-    ref.current?.addEventListener('mousemove', handler);
-    ref.current?.addEventListener('mouseleave', () => {
-      if (!ref.current) return;
-      ref.current.style.cssText =
-        'will-change: transform; transform: perspective(500px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1); margin: auto;';
-    });
-  }, [rect]);
+    const mouseLeaveHandler = () => {
+      rect = undefined;
+      element.style.transition = 'transform 0.2s cubic-bezier(1, 0.07, 1, 1.025)';
+      element.style.transform = `perspective(500px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+      setTimeout(() => {
+        if (element) {
+          element.style.transition = '';
+        }
+      }, 600);
+    };
+
+    element.addEventListener('mouseenter', mouseEnterHandler);
+    element.addEventListener('mousemove', mouseMoveHandler);
+    element.addEventListener('mouseleave', mouseLeaveHandler);
+
+    return () => {
+      element.removeEventListener('mouseenter', mouseEnterHandler);
+      element.removeEventListener('mousemove', mouseMoveHandler);
+      element.removeEventListener('mouseleave', mouseLeaveHandler);
+    };
+  }, []);
 
   return (
     <div ref={ref} style={styles.imageContainer}>

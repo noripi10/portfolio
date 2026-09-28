@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import { useTheme } from "expo-router/react-navigation";
+import { useTheme } from 'expo-router/react-navigation';
 
 export const Backgound = () => {
   const theme = useTheme();
@@ -10,7 +10,6 @@ export const Backgound = () => {
       style={[
         styles.background,
         {
-          // @ts-expect-error
           backgroundImage: 'url(/images/grid.svg)',
           backgroundColor: theme.colors.background,
         },

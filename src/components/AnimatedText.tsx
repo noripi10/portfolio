@@ -21,7 +21,6 @@ export const AnimatedText = ({ children }: { children: string }) => {
       const char = randomChar();
       arr2[i] = char;
     });
-    console.info(arr1, arr2);
 
     let step = 0;
 

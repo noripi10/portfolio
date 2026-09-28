@@ -1,6 +1,6 @@
 import { Platform, StyleSheet, useWindowDimensions, View } from 'react-native';
 
-import { useTheme } from "expo-router/react-navigation";
+import { useTheme } from 'expo-router/react-navigation';
 import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -35,7 +35,6 @@ export const MobileHeader = () => {
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    // @ts-expect-error
     position: 'sticky',
     top: 0,
     left: 0,
